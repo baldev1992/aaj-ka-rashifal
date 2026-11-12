@@ -423,16 +423,16 @@ function renderSigns() {
   const t = translations[currentLanguage];
 
   grid.innerHTML = signs.map(sign => `
-    <div class="zodiac-card">
-      <img
-        class="zodiac-icon"
-        src="icons/${sign[3]}"
-        alt="${currentLanguage === "hi" ? sign[1] : sign[2]}"
-      >
-      <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
-      <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
-      <span class="coming">${t.coming}</span>
-    </div>
+    <a class="zodiac-card" href="horoscope.html?sign=${sign[0]}&period=today" style="text-decoration:none;color:inherit;display:block;">
+  <img
+    class="zodiac-icon"
+    src="icons/${sign[3]}"
+    alt="${currentLanguage === "hi" ? sign[1] : sign[2]}"
+  >
+  <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
+  <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
+  <span class="coming">${t.coming}</span>
+</a>
   `).join("");
 }
 
