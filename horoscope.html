@@ -1,1 +1,169 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>राशिफल | Aaj Ka Rashifal</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf8f3;
+      color: #29213d;
+    }
+    header {
+      background: #30204f;
+      color: white;
+      padding: 18px 6%;
+    }
+    .nav {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    a { color: inherit; }
+    .home-link { color: #f5c96b; text-decoration: none; }
+    main {
+      max-width: 850px;
+      margin: 35px auto;
+      padding: 0 18px;
+    }
+    .panel {
+      background: white;
+      border-radius: 16px;
+      padding: 30px 22px;
+      box-shadow: 0 3px 14px rgba(40,25,65,.06);
+    }
+    .sign-icon {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 12px;
+    }
+    h1, .subtitle { text-align: center; }
+    h1 { color: #493365; margin-bottom: 8px; }
+    .subtitle { color: #777; }
+    .periods {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 25px 0;
+    }
+    .periods a {
+      padding: 10px 17px;
+      border: 1px solid #ded5eb;
+      border-radius: 22px;
+      text-decoration: none;
+      color: #493365;
+    }
+    .periods a.active {
+      background: #493365;
+      color: white;
+    }
+    .content {
+      background: #faf8f3;
+      border-radius: 12px;
+      padding: 20px;
+      line-height: 1.8;
+      text-align: center;
+    }
+    .date { color: #8a6caa; text-align: center; }
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <strong>✦ Aaj Ka Rashifal</strong>
+    <a class="home-link" href="index.html">← Home</a>
+  </div>
+</header>
+
+<main>
+  <section class="panel">
+    <img class="sign-icon" id="signIcon" src="" alt="">
+    <h1 id="signName">राशिफल</h1>
+    <p class="subtitle" id="signEnglish"></p>
+    <p class="date" id="todayDate"></p>
+
+    <nav class="periods">
+      <a href="#" data-period="today">आज</a>
+      <a href="#" data-period="week">साप्ताहिक</a>
+      <a href="#" data-period="month">मासिक</a>
+      <a href="#" data-period="year">वार्षिक</a>
+    </nav>
+
+    <div class="content">
+      <h2 id="periodTitle">आज का राशिफल</h2>
+      <p id="message">राशिफल जल्द उपलब्ध होगा।</p>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Aaj Ka Rashifal</footer>
+
+<script>
+const signs = {
+  ARIES: ["मेष", "Aries", "aries.png"],
+  TAURUS: ["वृषभ", "Taurus", "taurus.png"],
+  GEMINI: ["मिथुन", "Gemini", "gemini.png"],
+  CANCER: ["कर्क", "Cancer", "cancer.png"],
+  LEO: ["सिंह", "Leo", "leo.png"],
+  VIRGO: ["कन्या", "Virgo", "virgo.png"],
+  LIBRA: ["तुला", "Libra", "libra.png"],
+  SCORPIO: ["वृश्चिक", "Scorpio", "scorpio.png"],
+  SAGITTARIUS: ["धनु", "Sagittarius", "sagittarius.png"],
+  CAPRICORN: ["मकर", "Capricorn", "capricorn.png"],
+  AQUARIUS: ["कुंभ", "Aquarius", "aquarius.png"],
+  PISCES: ["मीन", "Pisces", "pisces.png"]
+};
+
+const periods = {
+  today: "आज का राशिफल",
+  week: "साप्ताहिक राशिफल",
+  month: "मासिक राशिफल",
+  year: "वार्षिक राशिफल"
+};
+
+const params = new URLSearchParams(window.location.search);
+const signId = (params.get("sign") || "ARIES").toUpperCase();
+const period = params.get("period") || "today";
+const sign = signs[signId] || signs.ARIES;
+
+document.getElementById("signIcon").src = "icons/" + sign[2];
+document.getElementById("signIcon").alt = sign[1];
+document.getElementById("signName").textContent = sign[0];
+document.getElementById("signEnglish").textContent = sign[1];
+
+document.getElementById("todayDate").textContent =
+  new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+document.getElementById("periodTitle").textContent =
+  periods[period] || periods.today;
+
+document.querySelectorAll(".periods a").forEach(link => {
+  const linkPeriod = link.dataset.period;
+  link.href = `horoscope.html?sign=${signId}&period=${linkPeriod}`;
+  if (linkPeriod === period) link.classList.add("active");
+});
+</script>
+
+</body>
+</html>
