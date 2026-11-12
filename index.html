@@ -1,59 +1,451 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Aaj Ka Rashifal | आज का राशिफल</title>
-  <meta name="description" content="Read today's horoscope in Hindi and English for all 12 zodiac signs.">
+  <meta name="description" content="आज का राशिफल पढ़ें। सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल हिंदी और English में।">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f8f6f1;
-      color: #292342;
-      text-align: center;
+      background: #faf8f3;
+      color: #29213d;
     }
+
     header {
-      background: #39265e;
+      background: #30204f;
       color: white;
-      padding: 35px 15px;
+      padding: 18px 6%;
     }
-    header h1 { margin: 0 0 10px; }
-    main { padding: 35px 15px; }
-    .welcome {
+
+    .nav {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #f5c96b;
+    }
+
+    .lang-btn {
+      background: #f5c96b;
+      color: #30204f;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #39245e, #65418b);
+      color: white;
+      text-align: center;
+      padding: 65px 20px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      margin: 0 0 15px;
+    }
+
+    .hero p {
+      color: #eee5fa;
+      font-size: 17px;
+      line-height: 1.7;
       max-width: 650px;
       margin: auto;
+    }
+
+    .date {
+      margin-top: 22px;
+      color: #f5d68d;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: #777;
+    }
+
+    .periods {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 35px;
+    }
+
+    .period-btn {
+      background: white;
+      border: 1px solid #ded5eb;
+      color: #493365;
+      border-radius: 25px;
+      padding: 11px 22px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .period-btn.active {
+      background: #493365;
+      color: white;
+      border-color: #493365;
+    }
+
+    .zodiac-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .zodiac-card {
+      background: white;
+      border: 1px solid #eee7f3;
+      border-radius: 15px;
+      padding: 24px 12px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(40, 25, 65, 0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .zodiac-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 7px 20px rgba(40, 25, 65, 0.10);
+    }
+
+    .symbol {
+      font-size: 36px;
+      color: #a47737;
+      margin-bottom: 12px;
+    }
+
+    .zodiac-card h3 {
+      margin: 5px 0;
+      font-size: 19px;
+    }
+
+    .zodiac-card p {
+      margin: 5px 0 0;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .coming {
+      display: inline-block;
+      margin-top: 14px;
+      color: #8a6caa;
+      background: #f5effa;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .info {
+      text-align: center;
+      background: white;
+      border-radius: 15px;
+      padding: 28px 15px;
+      margin-top: 40px;
+    }
+
+    .info h2 {
+      color: #493365;
+    }
+
+    .info p {
+      color: #777;
       line-height: 1.7;
     }
+
     footer {
-      padding: 20px;
-      color: #777;
+      background: #30204f;
+      color: #eee5fa;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 30px;
       font-size: 14px;
+    }
+
+    @media (max-width: 750px) {
+      .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .zodiac-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>आज का राशिफल</h1>
-    <p>Aaj Ka Rashifal</p>
-  </header>
 
-  <main>
-    <div class="welcome">
-      <h2>Welcome to Aaj Ka Rashifal</h2>
-      <p>
-        आपका स्वागत है! यहाँ आपको सभी 12 राशियों का
-        दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल
-        हिंदी और English में मिलेगा।
-      </p>
-      <p>Daily Horoscope | Weekly Horoscope | Monthly Horoscope | Yearly Horoscope</p>
-      <p>Coming Soon!</p>
+<header>
+  <div class="nav">
+    <div class="logo">✦ Aaj Ka <span>Rashifal</span></div>
+    <button class="lang-btn" onclick="toggleLanguage()">English</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 id="heroTitle">आज का राशिफल</h1>
+  <p id="heroDescription">
+    जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी
+    भविष्यवाणियां हिंदी और English में पढ़ें।
+  </p>
+  <div class="date" id="todayDate"></div>
+</section>
+
+<main>
+
+  <div class="section-title">
+    <h2 id="zodiacTitle">अपनी राशि चुनें</h2>
+    <p id="zodiacDescription">अपनी राशि के अनुसार राशिफल देखें</p>
+  </div>
+
+  <div class="periods">
+    <button class="period-btn active" data-period="today" onclick="selectPeriod(this)">आज</button>
+    <button class="period-btn" data-period="week" onclick="selectPeriod(this)">साप्ताहिक</button>
+    <button class="period-btn" data-period="month" onclick="selectPeriod(this)">मासिक</button>
+    <button class="period-btn" data-period="year" onclick="selectPeriod(this)">वार्षिक</button>
+  </div>
+
+  <div class="zodiac-grid" id="zodiacGrid">
+
+    <div class="zodiac-card">
+      <div class="symbol">♈</div>
+      <h3>मेष</h3>
+      <p>Aries</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
     </div>
-  </main>
 
-  <footer>
-    © 2026 Aaj Ka Rashifal
-  </footer>
+    <div class="zodiac-card">
+      <div class="symbol">♉</div>
+      <h3>वृषभ</h3>
+      <p>Taurus</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♊</div>
+      <h3>मिथुन</h3>
+      <p>Gemini</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♋</div>
+      <h3>कर्क</h3>
+      <p>Cancer</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♌</div>
+      <h3>सिंह</h3>
+      <p>Leo</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♍</div>
+      <h3>कन्या</h3>
+      <p>Virgo</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♎</div>
+      <h3>तुला</h3>
+      <p>Libra</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♏</div>
+      <h3>वृश्चिक</h3>
+      <p>Scorpio</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♐</div>
+      <h3>धनु</h3>
+      <p>Sagittarius</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♑</div>
+      <h3>मकर</h3>
+      <p>Capricorn</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♒</div>
+      <h3>कुंभ</h3>
+      <p>Aquarius</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+    <div class="zodiac-card">
+      <div class="symbol">♓</div>
+      <h3>मीन</h3>
+      <p>Pisces</p>
+      <span class="coming">राशिफल जल्द उपलब्ध होगा</span>
+    </div>
+
+  </div>
+
+  <section class="info">
+    <h2 id="aboutTitle">हमारे बारे में</h2>
+    <p id="aboutDescription">
+      Aaj Ka Rashifal पर आपको सभी 12 राशियों का दैनिक, साप्ताहिक,
+      मासिक और वार्षिक राशिफल एक ही जगह मिलेगा।
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 Aaj Ka Rashifal | <span id="footerText">आपका स्वागत है</span>
+</footer>
+
+<script>
+  let currentLanguage = "hi";
+
+  const translations = {
+    en: {
+      heroTitle: "Today's Horoscope",
+      heroDescription: "Discover your horoscope. Read predictions about career, finance, love and health in Hindi and English.",
+      zodiacTitle: "Choose Your Zodiac Sign",
+      zodiacDescription: "Explore your horoscope according to your zodiac sign",
+      aboutTitle: "About Us",
+      aboutDescription: "Aaj Ka Rashifal brings daily, weekly, monthly and yearly horoscopes for all 12 zodiac signs in one place.",
+      footerText: "Welcome to Aaj Ka Rashifal",
+      periods: ["Today", "Weekly", "Monthly", "Yearly"],
+      coming: "Horoscope coming soon",
+      button: "हिंदी"
+    },
+    hi: {
+      heroTitle: "आज का राशिफल",
+      heroDescription: "जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी भविष्यवाणियां हिंदी और English में पढ़ें।",
+      zodiacTitle: "अपनी राशि चुनें",
+      zodiacDescription: "अपनी राशि के अनुसार राशिफल देखें",
+      aboutTitle: "हमारे बारे में",
+      aboutDescription: "Aaj Ka Rashifal पर आपको सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल एक ही जगह मिलेगा।",
+      footerText: "आपका स्वागत है",
+      periods: ["आज", "साप्ताहिक", "मासिक", "वार्षिक"],
+      coming: "राशिफल जल्द उपलब्ध होगा",
+      button: "English"
+    }
+  };
+
+  const signs = [
+    ["ARIES", "मेष", "Aries", "♈"],
+    ["TAURUS", "वृषभ", "Taurus", "♉"],
+    ["GEMINI", "मिथुन", "Gemini", "♊"],
+    ["CANCER", "कर्क", "Cancer", "♋"],
+    ["LEO", "सिंह", "Leo", "♌"],
+    ["VIRGO", "कन्या", "Virgo", "♍"],
+    ["LIBRA", "तुला", "Libra", "♎"],
+    ["SCORPIO", "वृश्चिक", "Scorpio", "♏"],
+    ["SAGITTARIUS", "धनु", "Sagittarius", "♐"],
+    ["CAPRICORN", "मकर", "Capricorn", "♑"],
+    ["AQUARIUS", "कुंभ", "Aquarius", "♒"],
+    ["PISCES", "मीन", "Pisces", "♓"]
+  ];
+
+  function toggleLanguage() {
+    currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+    const t = translations[currentLanguage];
+
+    document.documentElement.lang = currentLanguage;
+    document.getElementById("heroTitle").textContent = t.heroTitle;
+    document.getElementById("heroDescription").textContent = t.heroDescription;
+    document.getElementById("zodiacTitle").textContent = t.zodiacTitle;
+    document.getElementById("zodiacDescription").textContent = t.zodiacDescription;
+    document.getElementById("aboutTitle").textContent = t.aboutTitle;
+    document.getElementById("aboutDescription").textContent = t.aboutDescription;
+    document.getElementById("footerText").textContent = t.footerText;
+    document.querySelector(".lang-btn").textContent = t.button;
+
+    document.querySelectorAll(".period-btn").forEach((button, index) => {
+      button.textContent = t.periods[index];
+    });
+
+    renderSigns();
+  }
+
+  function renderSigns() {
+    const grid = document.getElementById("zodiacGrid");
+    const t = translations[currentLanguage];
+
+    grid.innerHTML = signs.map(sign => `
+      <div class="zodiac-card">
+        <div class="symbol">${sign[3]}</div>
+        <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
+        <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
+        <span class="coming">${t.coming}</span>
+      </div>
+    `).join("");
+  }
+
+  function selectPeriod(button) {
+    document.querySelectorAll(".period-btn").forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+  }
+
+  document.getElementById("todayDate").textContent =
+    new Date().toLocaleDateString("en-IN", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+</script>
+
 </body>
 </html>
