@@ -446,13 +446,14 @@ function renderSigns() {
   }
 
   document.getElementById("todayDate").textContent =
-    renderSigns();
-    new Date().toLocaleDateString("en-IN", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
+  new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+renderSigns();
 </script>
 
 </body>
