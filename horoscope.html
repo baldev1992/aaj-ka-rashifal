@@ -151,14 +151,45 @@ document.getElementById("signIcon").alt = sign[1];
 document.getElementById("signName").textContent = sign[0];
 document.getElementById("signEnglish").textContent = sign[1];
 
-document.getElementById("todayDate").textContent =
-  new Date().toLocaleDateString("en-IN", {
-    weekday: "long",
+const now = new Date();
+const dateDisplay = document.getElementById("todayDate");
+
+if (period === "today") {
+  dateDisplay.textContent = now.toLocaleDateString("hi-IN", {
     day: "numeric",
     month: "long",
     year: "numeric"
   });
 
+} else if (period === "week") {
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - now.getDay());
+
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekStart.getDate() + 6);
+
+  const startText = weekStart.toLocaleDateString("hi-IN", {
+    day: "numeric",
+    month: "long"
+  });
+
+  const endText = weekEnd.toLocaleDateString("hi-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  dateDisplay.textContent = startText + " – " + endText;
+
+} else if (period === "month") {
+  dateDisplay.textContent = now.toLocaleDateString("hi-IN", {
+    month: "long",
+    year: "numeric"
+  });
+
+} else if (period === "year") {
+  dateDisplay.textContent = now.getFullYear();
+}
 document.getElementById("periodTitle").textContent =
   periods[period] || periods.today;
 
