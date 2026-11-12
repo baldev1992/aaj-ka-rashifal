@@ -106,9 +106,12 @@
     </nav>
 
     <div class="content">
-      <h2 id="periodTitle">आज का राशिफल</h2>
-      <p id="message">राशिफल जल्द उपलब्ध होगा।</p>
-    </div>
+  <h2 id="periodTitle">आज का राशिफल</h2>
+
+  <div id="horoscopeContent">
+    <p>राशिफल लोड हो रहा है...</p>
+  </div>
+</div>
   </section>
 </main>
 
@@ -164,6 +167,45 @@ document.querySelectorAll(".periods a").forEach(link => {
   link.href = `horoscope.html?sign=${signId}&period=${linkPeriod}`;
   if (linkPeriod === period) link.classList.add("active");
 });
+  function addSection(container, title, value) {
+  const section = document.createElement("section");
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = value || "जानकारी उपलब्ध नहीं है।";
+
+  section.appendChild(heading);
+  section.appendChild(paragraph);
+  container.appendChild(section);
+}
+
+fetch(`${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`)
+  .then(response => response.json())
+  .then(result => {
+    if (!result.success) {
+      throw new Error(result.error || "राशिफल उपलब्ध नहीं है।");
+    }
+
+    const data = result.data;
+    const container = document.getElementById("horoscopeContent");
+    container.innerHTML = "";
+
+    addSection(container, "सामान्य राशिफल", data.Overall_HI);
+    addSection(container, "करियर", data.Career_HI);
+    addSection(container, "धन और वित्त", data.Finance_HI);
+    addSection(container, "प्रेम और संबंध", data.Love_HI);
+    addSection(container, "स्वास्थ्य", data.Health_HI);
+    addSection(container, "आज का शुभ रंग", data.Lucky_Color);
+    addSection(container, "शुभ अंक", data.Lucky_Number);
+    addSection(container, "विशेष सलाह", data.Advice_HI);
+  })
+  .catch(error => {
+    document.getElementById("horoscopeContent").textContent =
+      "राशिफल लोड नहीं हो पाया। कृपया कुछ देर बाद फिर प्रयास करें।";
+    console.error(error);
+  });
 </script>
 
 </body>
