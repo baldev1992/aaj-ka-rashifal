@@ -383,20 +383,19 @@
   };
 
   const signs = [
-    ["ARIES", "मेष", "Aries", "♈"],
-    ["TAURUS", "वृषभ", "Taurus", "♉"],
-    ["GEMINI", "मिथुन", "Gemini", "♊"],
-    ["CANCER", "कर्क", "Cancer", "♋"],
-    ["LEO", "सिंह", "Leo", "♌"],
-    ["VIRGO", "कन्या", "Virgo", "♍"],
-    ["LIBRA", "तुला", "Libra", "♎"],
-    ["SCORPIO", "वृश्चिक", "Scorpio", "♏"],
-    ["SAGITTARIUS", "धनु", "Sagittarius", "♐"],
-    ["CAPRICORN", "मकर", "Capricorn", "♑"],
-    ["AQUARIUS", "कुंभ", "Aquarius", "♒"],
-    ["PISCES", "मीन", "Pisces", "♓"]
-  ];
-
+  ["ARIES", "मेष", "Aries", "aries.png"],
+  ["TAURUS", "वृषभ", "Taurus", "taurus.png"],
+  ["GEMINI", "मिथुन", "Gemini", "gemini.png"],
+  ["CANCER", "कर्क", "Cancer", "cancer.png"],
+  ["LEO", "सिंह", "Leo", "leo.png"],
+  ["VIRGO", "कन्या", "Virgo", "virgo.png"],
+  ["LIBRA", "तुला", "Libra", "libra.png"],
+  ["SCORPIO", "वृश्चिक", "Scorpio", "scorpio.png"],
+  ["SAGITTARIUS", "धनु", "Sagittarius", "sagittarius.png"],
+  ["CAPRICORN", "मकर", "Capricorn", "capricorn.png"],
+  ["AQUARIUS", "कुंभ", "Aquarius", "aquarius.png"],
+  ["PISCES", "मीन", "Pisces", "pisces.png"]
+];
   function toggleLanguage() {
     currentLanguage = currentLanguage === "hi" ? "en" : "hi";
     const t = translations[currentLanguage];
@@ -418,19 +417,25 @@
     renderSigns();
   }
 
-  function renderSigns() {
-    const grid = document.getElementById("zodiacGrid");
-    const t = translations[currentLanguage];
+  
+function renderSigns() {
+  const grid = document.getElementById("zodiacGrid");
+  const t = translations[currentLanguage];
 
-    grid.innerHTML = signs.map(sign => `
-      <div class="zodiac-card">
-        <div class="symbol">${sign[3]}</div>
-        <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
-        <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
-        <span class="coming">${t.coming}</span>
-      </div>
-    `).join("");
-  }
+  grid.innerHTML = signs.map(sign => `
+    <div class="zodiac-card">
+      <img
+        class="zodiac-icon"
+        src="icons/${sign[3]}"
+        alt="${currentLanguage === "hi" ? sign[1] : sign[2]}"
+      >
+      <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
+      <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
+      <span class="coming">${t.coming}</span>
+    </div>
+  `).join("");
+}
+
 
   function selectPeriod(button) {
     document.querySelectorAll(".period-btn").forEach(btn => {
@@ -441,6 +446,7 @@
   }
 
   document.getElementById("todayDate").textContent =
+    renderSigns();
     new Date().toLocaleDateString("en-IN", {
       weekday: "long",
       day: "numeric",
