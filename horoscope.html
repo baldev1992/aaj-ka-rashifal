@@ -201,9 +201,7 @@
     <div class="content">
       <h2 id="periodTitle">आज का राशिफल</h2>
 
-      <div id="horoscopeContent">
-        <p>राशिफल लोड हो रहा है...</p>
-      </div>
+      <div id="horoscopeContent"></div>
     </div>
 
   </section>
@@ -468,6 +466,12 @@ function applyLanguage() {
     hi ? "राशिफल | Aaj Ka Rashifal" : "Horoscope | Aaj Ka Rashifal";
 
 }
+function showLoadingMessage() {
+  document.getElementById("horoscopeContent").textContent =
+    currentLanguage === "hi"
+      ? "राशिफल लोड हो रहा है..."
+      : "Loading horoscope...";
+}
 
 // Change language and save preference
 function toggleLanguage() {
@@ -486,7 +490,7 @@ function toggleLanguage() {
 
 // Load saved language when page opens
 applyLanguage();
-
+showLoadingMessage();
 // Fetch horoscope data
 fetch(
   `${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`
