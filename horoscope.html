@@ -249,43 +249,88 @@ document.querySelectorAll(".periods a").forEach(link => {
   link.href = `horoscope.html?sign=${signId}&period=${linkPeriod}`;
   if (linkPeriod === period) link.classList.add("active");
 });
-  function addSection(container, title, value) {
+  let horoscopeData = null;
+
+function addSection(container, title, value) {
   const section = document.createElement("section");
 
   const heading = document.createElement("h3");
   heading.textContent = title;
 
   const paragraph = document.createElement("p");
-  paragraph.textContent = value || "जानकारी उपलब्ध नहीं है।";
+  paragraph.textContent = value || "Information not available.";
 
   section.appendChild(heading);
   section.appendChild(paragraph);
   container.appendChild(section);
 }
 
+function renderHoroscope() {
+  if (!horoscopeData) return;
+
+  const data = horoscopeData;
+  const container = document.getElementById("horoscopeContent");
+  container.innerHTML = "";
+
+  const hi = currentLanguage === "hi";
+
+  addSection(container,
+    hi ? "सामान्य राशिफल" : "Overall Horoscope",
+    hi ? data.Overall_HI : data.Overall_EN
+  );
+
+  addSection(container,
+    hi ? "करियर" : "Career",
+    hi ? data.Career_HI : data.Career_EN
+  );
+
+  addSection(container,
+    hi ? "धन और वित्त" : "Finance",
+    hi ? data.Finance_HI : data.Finance_EN
+  );
+
+  addSection(container,
+    hi ? "प्रेम और संबंध" : "Love & Relationships",
+    hi ? data.Love_HI : data.Love_EN
+  );
+
+  addSection(container,
+    hi ? "स्वास्थ्य" : "Health",
+    hi ? data.Health_HI : data.Health_EN
+  );
+
+  addSection(container,
+    hi ? "आज का शुभ रंग" : "Lucky Colour",
+    data.Lucky_Color
+  );
+
+  addSection(container,
+    hi ? "शुभ अंक" : "Lucky Number",
+    data.Lucky_Number
+  );
+
+  addSection(container,
+    hi ? "विशेष सलाह" : "Special Advice",
+    hi ? data.Advice_HI : data.Advice_EN
+  );
+}
+
 fetch(`${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`)
   .then(response => response.json())
   .then(result => {
     if (!result.success) {
-      throw new Error(result.error || "राशिफल उपलब्ध नहीं है।");
+      throw new Error(result.error || "Horoscope not available.");
     }
 
-    const data = result.data;
-    const container = document.getElementById("horoscopeContent");
-    container.innerHTML = "";
-
-    addSection(container, "सामान्य राशिफल", data.Overall_HI);
-    addSection(container, "करियर", data.Career_HI);
-    addSection(container, "धन और वित्त", data.Finance_HI);
-    addSection(container, "प्रेम और संबंध", data.Love_HI);
-    addSection(container, "स्वास्थ्य", data.Health_HI);
-    addSection(container, "आज का शुभ रंग", data.Lucky_Color);
-    addSection(container, "शुभ अंक", data.Lucky_Number);
-    addSection(container, "विशेष सलाह", data.Advice_HI);
+    horoscopeData = result.data;
+    renderHoroscope();
   })
   .catch(error => {
     document.getElementById("horoscopeContent").textContent =
-      "राशिफल लोड नहीं हो पाया। कृपया कुछ देर बाद फिर प्रयास करें।";
+      currentLanguage === "hi"
+        ? "राशिफल लोड नहीं हो पाया। कृपया बाद में प्रयास करें।"
+        : "Unable to load horoscope. Please try again later.";
+
     console.error(error);
   });
 </script>
