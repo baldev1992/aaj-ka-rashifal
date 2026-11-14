@@ -156,10 +156,10 @@ const params = new URLSearchParams(window.location.search);
 const signId = (params.get("sign") || "ARIES").toUpperCase();
 const period = params.get("period") || "today";
 const sign = signs[signId] || signs.ARIES;
-let currentLanguage = "hi";
+let currentLanguage = localStorage.getItem("rashifalLanguage") || "hi";
 
 function toggleLanguage() {
-  currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+  localStorage.setItem("rashifalLanguage", currentLanguage);
 
   document.documentElement.lang = currentLanguage;
 
@@ -173,7 +173,7 @@ function toggleLanguage() {
     currentLanguage === "hi" ? sign[1] : sign[0];
 
   document.getElementById("homeLink").textContent =
-    currentLanguage === "hi" ? "← Home" : "← घर";
+    currentLanguage === "hi" ? "← होम" : "← Home";
 
   const periodNames = {
     today: currentLanguage === "hi" ? "आज" : "Today",
@@ -302,9 +302,20 @@ function renderHoroscope() {
   );
 
   addSection(container,
-    hi ? "आज का शुभ रंग" : "Lucky Colour",
-    hi ? data.Lucky_Color_Hi : data.Lucky_Color_EN
-  );
+  hi ? "आज का शुभ रंग" : "Lucky Colour",
+  hi ? data.Lucky_Color : ({
+    "पीला": "Yellow",
+    "लाल": "Red",
+    "हरा": "Green",
+    "नीला": "Blue",
+    "सफेद": "White",
+    "काला": "Black",
+    "गुलाबी": "Pink",
+    "नारंगी": "Orange",
+    "बैंगनी": "Purple",
+    "भूरा": "Brown"
+  }[data.Lucky_Color] || data.Lucky_Color)
+);
 
   addSection(container,
     hi ? "शुभ अंक" : "Lucky Number",
