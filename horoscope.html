@@ -89,9 +89,17 @@
 
 <header>
   <div class="nav">
-    <strong>✦ Aaj Ka Rashifal</strong>
-    <a class="home-link" href="index.html">← Home</a>
+  <strong>✦ Aaj Ka Rashifal</strong>
+
+  <div style="display:flex; gap:15px; align-items:center;">
+    <button id="languageButton" onclick="toggleLanguage()"
+      style="padding:8px 12px; border-radius:20px; border:none; cursor:pointer;">
+      English
+    </button>
+
+    <a class="home-link" href="index.html" id="homeLink">← Home</a>
   </div>
+</div>
 </header>
 
 <main>
@@ -148,6 +156,46 @@ const params = new URLSearchParams(window.location.search);
 const signId = (params.get("sign") || "ARIES").toUpperCase();
 const period = params.get("period") || "today";
 const sign = signs[signId] || signs.ARIES;
+let currentLanguage = "hi";
+
+function toggleLanguage() {
+  currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+
+  document.documentElement.lang = currentLanguage;
+
+  document.getElementById("languageButton").textContent =
+    currentLanguage === "hi" ? "English" : "हिन्दी";
+
+  document.getElementById("signName").textContent =
+    currentLanguage === "hi" ? sign[0] : sign[1];
+
+  document.getElementById("signEnglish").textContent =
+    currentLanguage === "hi" ? sign[1] : sign[0];
+
+  document.getElementById("homeLink").textContent =
+    currentLanguage === "hi" ? "← Home" : "← घर";
+
+  const periodNames = {
+    today: currentLanguage === "hi" ? "आज" : "Today",
+    week: currentLanguage === "hi" ? "साप्ताहिक" : "Weekly",
+    month: currentLanguage === "hi" ? "मासिक" : "Monthly",
+    year: currentLanguage === "hi" ? "वार्षिक" : "Yearly"
+  };
+
+  document.querySelectorAll(".periods a").forEach(link => {
+    link.textContent = periodNames[link.dataset.period];
+  });
+
+  const titles = {
+    today: currentLanguage === "hi" ? "आज का राशिफल" : "Today's Horoscope",
+    week: currentLanguage === "hi" ? "साप्ताहिक राशिफल" : "Weekly Horoscope",
+    month: currentLanguage === "hi" ? "मासिक राशिफल" : "Monthly Horoscope",
+    year: currentLanguage === "hi" ? "वार्षिक राशिफल" : "Yearly Horoscope"
+  };
+
+  document.getElementById("periodTitle").textContent =
+    titles[period] || titles.today;
+}
 
 document.getElementById("signIcon").src = "icons/" + sign[2];
 document.getElementById("signIcon").alt = sign[1];
