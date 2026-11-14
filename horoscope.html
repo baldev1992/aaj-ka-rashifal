@@ -303,7 +303,7 @@ function renderHoroscope() {
 
   addSection(container,
     hi ? "आज का शुभ रंग" : "Lucky Colour",
-    data.Lucky_Color
+    hi ? data.Lucky_Color_Hi : data.Lucky_Color_EN
   );
 
   addSection(container,
