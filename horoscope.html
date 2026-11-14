@@ -195,7 +195,9 @@ function toggleLanguage() {
 
   document.getElementById("periodTitle").textContent =
     titles[period] || titles.today;
+  renderHoroscope();
 }
+
 
 document.getElementById("signIcon").src = "icons/" + sign[2];
 document.getElementById("signIcon").alt = sign[1];
