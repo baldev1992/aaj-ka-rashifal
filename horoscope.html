@@ -4,23 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>राशिफल | Aaj Ka Rashifal</title>
+  <title>Aaj Ka Rashifal</title>
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #faf8f3;
       color: #29213d;
     }
+
     header {
-  background: #30204f;
-  color: white;
-  padding: 18px 6%;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+      background: #30204f;
+      color: white;
+      padding: 18px 6%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
     .nav {
       max-width: 1000px;
       margin: auto;
@@ -29,19 +35,43 @@
       align-items: center;
       gap: 12px;
     }
-    a { color: inherit; }
-    .home-link { color: #f5c96b; text-decoration: none; }
+
+    .nav-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    #languageButton {
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .home-link {
+      color: #f5c96b;
+      text-decoration: none;
+    }
+
     main {
       max-width: 850px;
       margin: 35px auto;
       padding: 0 18px;
     }
+
     .panel {
       background: white;
       border-radius: 16px;
       padding: 30px 22px;
       box-shadow: 0 3px 14px rgba(40,25,65,.06);
     }
+
     .sign-icon {
       width: 120px;
       height: 120px;
@@ -49,9 +79,20 @@
       display: block;
       margin: 0 auto 12px;
     }
-    h1, .subtitle { text-align: center; }
-    h1 { color: #493365; margin-bottom: 8px; }
-    .subtitle { color: #777; }
+
+    h1, .subtitle {
+      text-align: center;
+    }
+
+    h1 {
+      color: #493365;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #777;
+    }
+
     .periods {
       display: flex;
       justify-content: center;
@@ -59,6 +100,7 @@
       gap: 10px;
       margin: 25px 0;
     }
+
     .periods a {
       padding: 10px 17px;
       border: 1px solid #ded5eb;
@@ -66,10 +108,12 @@
       text-decoration: none;
       color: #493365;
     }
+
     .periods a.active {
       background: #493365;
       color: white;
     }
+
     .content {
       background: #faf8f3;
       border-radius: 12px;
@@ -77,36 +121,74 @@
       line-height: 1.8;
       text-align: center;
     }
-    .date { color: #8a6caa; text-align: center; }
+
+    .content section {
+      margin-bottom: 24px;
+    }
+
+    .content h3 {
+      color: #493365;
+      margin-bottom: 8px;
+    }
+
+    .content p {
+      white-space: pre-line;
+    }
+
+    .date {
+      color: #8a6caa;
+      text-align: center;
+    }
+
     footer {
       text-align: center;
       padding: 25px;
       color: #777;
     }
+
+    @media (max-width: 480px) {
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .nav-actions {
+        gap: 10px;
+      }
+
+      .panel {
+        padding: 22px 15px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
 <header>
   <div class="nav">
-  <strong>✦ Aaj Ka Rashifal</strong>
+    <strong>✦ Aaj Ka Rashifal</strong>
 
-  <div style="display:flex; gap:15px; align-items:center;">
-    <button id="languageButton" onclick="toggleLanguage()"
-      style="padding:8px 12px; border-radius:20px; border:none; cursor:pointer;">
-      English
-    </button>
+    <div class="nav-actions">
+      <button id="languageButton" onclick="toggleLanguage()">
+        English
+      </button>
 
-    <a class="home-link" href="index.html" id="homeLink">← Home</a>
+      <a class="home-link" href="index.html" id="homeLink">
+        ← होम
+      </a>
+    </div>
   </div>
-</div>
 </header>
 
 <main>
   <section class="panel">
+
     <img class="sign-icon" id="signIcon" src="" alt="">
+
     <h1 id="signName">राशिफल</h1>
+
     <p class="subtitle" id="signEnglish"></p>
+
     <p class="date" id="todayDate"></p>
 
     <nav class="periods">
@@ -117,19 +199,24 @@
     </nav>
 
     <div class="content">
-  <h2 id="periodTitle">आज का राशिफल</h2>
+      <h2 id="periodTitle">आज का राशिफल</h2>
 
-  <div id="horoscopeContent">
-    <p>राशिफल लोड हो रहा है...</p>
-  </div>
-</div>
+      <div id="horoscopeContent">
+        <p>राशिफल लोड हो रहा है...</p>
+      </div>
+    </div>
+
   </section>
 </main>
 
 <footer>© 2026 Aaj Ka Rashifal</footer>
 
 <script>
+
+// Google Apps Script API
 const API_URL = "https://script.google.com/macros/s/AKfycbzeL8GUKUSWh4iSKnfbF0h2jQTCzDfBDKNpYjCryc6A6UR0o6kPOABmNr-t9la4oKCihg/exec";
+
+// Zodiac signs
 const signs = {
   ARIES: ["मेष", "Aries", "aries.png"],
   TAURUS: ["वृषभ", "Taurus", "taurus.png"],
@@ -145,165 +232,84 @@ const signs = {
   PISCES: ["मीन", "Pisces", "pisces.png"]
 };
 
-const periods = {
-  today: "आज का राशिफल",
-  week: "साप्ताहिक राशिफल",
-  month: "मासिक राशिफल",
-  year: "वार्षिक राशिफल"
-};
-
+// URL parameters
 const params = new URLSearchParams(window.location.search);
+
 const signId = (params.get("sign") || "ARIES").toUpperCase();
 const period = params.get("period") || "today";
 const sign = signs[signId] || signs.ARIES;
-let currentLanguage = localStorage.getItem("rashifalLanguage") || "hi";
 
-function toggleLanguage() {
-  localStorage.setItem("rashifalLanguage", currentLanguage);
+// Remember visitor's language
+let currentLanguage =
+  localStorage.getItem("rashifalLanguage") || "hi";
 
-  document.documentElement.lang = currentLanguage;
+let horoscopeData = null;
 
-  document.getElementById("languageButton").textContent =
-    currentLanguage === "hi" ? "English" : "हिन्दी";
+// Set zodiac icon
+document.getElementById("signIcon").src =
+  "icons/" + sign[2];
 
-  document.getElementById("signName").textContent =
-    currentLanguage === "hi" ? sign[0] : sign[1];
-
-  document.getElementById("signEnglish").textContent =
-    currentLanguage === "hi" ? sign[1] : sign[0];
-
-  document.getElementById("homeLink").textContent =
-    currentLanguage === "hi" ? "← होम" : "← Home";
-
-  const periodNames = {
-    today: currentLanguage === "hi" ? "आज" : "Today",
-    week: currentLanguage === "hi" ? "साप्ताहिक" : "Weekly",
-    month: currentLanguage === "hi" ? "मासिक" : "Monthly",
-    year: currentLanguage === "hi" ? "वार्षिक" : "Yearly"
-  };
-
-  document.querySelectorAll(".periods a").forEach(link => {
-    link.textContent = periodNames[link.dataset.period];
-  });
-
-  const titles = {
-    today: currentLanguage === "hi" ? "आज का राशिफल" : "Today's Horoscope",
-    week: currentLanguage === "hi" ? "साप्ताहिक राशिफल" : "Weekly Horoscope",
-    month: currentLanguage === "hi" ? "मासिक राशिफल" : "Monthly Horoscope",
-    year: currentLanguage === "hi" ? "वार्षिक राशिफल" : "Yearly Horoscope"
-  };
-
-  document.getElementById("periodTitle").textContent =
-    titles[period] || titles.today;
-  renderHoroscope();
-}
-
-
-document.getElementById("signIcon").src = "icons/" + sign[2];
 document.getElementById("signIcon").alt = sign[1];
-document.getElementById("signName").textContent = sign[0];
-document.getElementById("signEnglish").textContent = sign[1];
 
-const now = new Date();
-const dateDisplay = document.getElementById("todayDate");
+// Update date according to selected period and language
+function updateDate() {
 
-if (period === "today") {
-  dateDisplay.textContent = now.toLocaleDateString("hi-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
+  const now = new Date();
+  const locale = currentLanguage === "hi" ? "hi-IN" : "en-IN";
 
-} else if (period === "week") {
-  const weekStart = new Date(now);
-  weekStart.setDate(now.getDate() - now.getDay());
+  const dateDisplay = document.getElementById("todayDate");
 
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekStart.getDate() + 6);
+  if (period === "today") {
 
-  const startText = weekStart.toLocaleDateString("hi-IN", {
-    day: "numeric",
-    month: "long"
-  });
+    dateDisplay.textContent = now.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
 
-  const endText = weekEnd.toLocaleDateString("hi-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
+  } else if (period === "week") {
 
-  dateDisplay.textContent = startText + " – " + endText;
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay());
 
-} else if (period === "month") {
-  dateDisplay.textContent = now.toLocaleDateString("hi-IN", {
-    month: "long",
-    year: "numeric"
-  });
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
 
-} else if (period === "year") {
-  dateDisplay.textContent = now.getFullYear();
-}
-document.getElementById("periodTitle").textContent =
-  periods[period] || periods.today;
+    const startText = weekStart.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long"
+    });
 
-document.querySelectorAll(".periods a").forEach(link => {
-  const linkPeriod = link.dataset.period;
-  link.href = `horoscope.html?sign=${signId}&period=${linkPeriod}`;
-  if (linkPeriod === period) link.classList.add("active");
-});
-  let horoscopeData = null;
+    const endText = weekEnd.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
 
-function addSection(container, title, value) {
-  const section = document.createElement("section");
+    dateDisplay.textContent = startText + " – " + endText;
 
-  const heading = document.createElement("h3");
-  heading.textContent = title;
+  } else if (period === "month") {
 
-  const paragraph = document.createElement("p");
-  paragraph.textContent = value || "Information not available.";
+    dateDisplay.textContent = now.toLocaleDateString(locale, {
+      month: "long",
+      year: "numeric"
+    });
 
-  section.appendChild(heading);
-  section.appendChild(paragraph);
-  container.appendChild(section);
+  } else if (period === "year") {
+
+    dateDisplay.textContent = now.getFullYear();
+
+  }
 }
 
-function renderHoroscope() {
-  if (!horoscopeData) return;
+// Lucky colour translation
+function getLuckyColor(color) {
 
-  const data = horoscopeData;
-  const container = document.getElementById("horoscopeContent");
-  container.innerHTML = "";
+  if (currentLanguage === "hi") {
+    return color;
+  }
 
-  const hi = currentLanguage === "hi";
-
-  addSection(container,
-    hi ? "सामान्य राशिफल" : "Overall Horoscope",
-    hi ? data.Overall_HI : data.Overall_EN
-  );
-
-  addSection(container,
-    hi ? "करियर" : "Career",
-    hi ? data.Career_HI : data.Career_EN
-  );
-
-  addSection(container,
-    hi ? "धन और वित्त" : "Finance",
-    hi ? data.Finance_HI : data.Finance_EN
-  );
-
-  addSection(container,
-    hi ? "प्रेम और संबंध" : "Love & Relationships",
-    hi ? data.Love_HI : data.Love_EN
-  );
-
-  addSection(container,
-    hi ? "स्वास्थ्य" : "Health",
-    hi ? data.Health_HI : data.Health_EN
-  );
-
-  addSection(container,
-  hi ? "आज का शुभ रंग" : "Lucky Colour",
-  hi ? data.Lucky_Color : ({
+  const colors = {
     "पीला": "Yellow",
     "लाल": "Red",
     "हरा": "Green",
@@ -314,38 +320,203 @@ function renderHoroscope() {
     "नारंगी": "Orange",
     "बैंगनी": "Purple",
     "भूरा": "Brown"
-  }[data.Lucky_Color] || data.Lucky_Color)
-);
+  };
 
-  addSection(container,
+  return colors[color] || color;
+}
+
+// Add horoscope section
+function addSection(container, title, value) {
+
+  const section = document.createElement("section");
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = value || (
+    currentLanguage === "hi"
+      ? "जानकारी उपलब्ध नहीं है।"
+      : "Information not available."
+  );
+
+  section.appendChild(heading);
+  section.appendChild(paragraph);
+
+  container.appendChild(section);
+}
+
+// Display horoscope in selected language
+function renderHoroscope() {
+
+  if (!horoscopeData) return;
+
+  const data = horoscopeData;
+
+  const container =
+    document.getElementById("horoscopeContent");
+
+  container.innerHTML = "";
+
+  const hi = currentLanguage === "hi";
+
+  addSection(
+    container,
+    hi ? "सामान्य राशिफल" : "Overall Horoscope",
+    hi ? data.Overall_HI : data.Overall_EN
+  );
+
+  addSection(
+    container,
+    hi ? "करियर" : "Career",
+    hi ? data.Career_HI : data.Career_EN
+  );
+
+  addSection(
+    container,
+    hi ? "धन और वित्त" : "Finance",
+    hi ? data.Finance_HI : data.Finance_EN
+  );
+
+  addSection(
+    container,
+    hi ? "प्रेम और संबंध" : "Love & Relationships",
+    hi ? data.Love_HI : data.Love_EN
+  );
+
+  addSection(
+    container,
+    hi ? "स्वास्थ्य" : "Health",
+    hi ? data.Health_HI : data.Health_EN
+  );
+
+  addSection(
+    container,
+    hi ? "आज का शुभ रंग" : "Lucky Colour",
+    getLuckyColor(data.Lucky_Color)
+  );
+
+  addSection(
+    container,
     hi ? "शुभ अंक" : "Lucky Number",
     data.Lucky_Number
   );
 
-  addSection(container,
+  addSection(
+    container,
     hi ? "विशेष सलाह" : "Special Advice",
     hi ? data.Advice_HI : data.Advice_EN
   );
+
 }
 
-fetch(`${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`)
-  .then(response => response.json())
-  .then(result => {
-    if (!result.success) {
-      throw new Error(result.error || "Horoscope not available.");
+// Apply language to the complete page
+function applyLanguage() {
+
+  const hi = currentLanguage === "hi";
+
+  document.documentElement.lang = currentLanguage;
+
+  document.getElementById("languageButton").textContent =
+    hi ? "English" : "हिन्दी";
+
+  document.getElementById("signName").textContent =
+    hi ? sign[0] : sign[1];
+
+  document.getElementById("signEnglish").textContent =
+    hi ? sign[1] : sign[0];
+
+  document.getElementById("homeLink").textContent =
+    hi ? "← होम" : "← Home";
+
+  const periodNames = {
+    today: hi ? "आज" : "Today",
+    week: hi ? "साप्ताहिक" : "Weekly",
+    month: hi ? "मासिक" : "Monthly",
+    year: hi ? "वार्षिक" : "Yearly"
+  };
+
+  document.querySelectorAll(".periods a").forEach(link => {
+
+    link.textContent = periodNames[link.dataset.period];
+
+    link.href =
+      `horoscope.html?sign=${signId}&period=${link.dataset.period}`;
+
+    if (link.dataset.period === period) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
     }
 
-    horoscopeData = result.data;
-    renderHoroscope();
-  })
-  .catch(error => {
-    document.getElementById("horoscopeContent").textContent =
-      currentLanguage === "hi"
-        ? "राशिफल लोड नहीं हो पाया। कृपया बाद में प्रयास करें।"
-        : "Unable to load horoscope. Please try again later.";
-
-    console.error(error);
   });
+
+  const titles = {
+    today: hi ? "आज का राशिफल" : "Today's Horoscope",
+    week: hi ? "साप्ताहिक राशिफल" : "Weekly Horoscope",
+    month: hi ? "मासिक राशिफल" : "Monthly Horoscope",
+    year: hi ? "वार्षिक राशिफल" : "Yearly Horoscope"
+  };
+
+  document.getElementById("periodTitle").textContent =
+    titles[period] || titles.today;
+
+  updateDate();
+  renderHoroscope();
+
+  document.title =
+    hi ? "राशिफल | Aaj Ka Rashifal" : "Horoscope | Aaj Ka Rashifal";
+
+}
+
+// Change language and save preference
+function toggleLanguage() {
+
+  currentLanguage =
+    currentLanguage === "hi" ? "en" : "hi";
+
+  localStorage.setItem(
+    "rashifalLanguage",
+    currentLanguage
+  );
+
+  applyLanguage();
+
+}
+
+// Load saved language when page opens
+applyLanguage();
+
+// Fetch horoscope data
+fetch(
+  `${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`
+)
+
+.then(response => response.json())
+
+.then(result => {
+
+  if (!result.success) {
+    throw new Error(result.error || "Horoscope not available.");
+  }
+
+  horoscopeData = result.data;
+
+  renderHoroscope();
+
+})
+
+.catch(error => {
+
+  document.getElementById("horoscopeContent").textContent =
+    currentLanguage === "hi"
+      ? "राशिफल लोड नहीं हो पाया। कृपया बाद में प्रयास करें।"
+      : "Unable to load horoscope. Please try again later.";
+
+  console.error(error);
+
+});
+
 </script>
 
 </body>
