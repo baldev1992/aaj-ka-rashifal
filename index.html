@@ -434,7 +434,7 @@ function renderSigns() {
   >
   <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
   <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
-  <span class="coming">${t.coming}</span>
+  <span class="coming" id="preview-${sign[0]}">राशिफल लोड हो रहा है...</span>
 </a>
   `).join("");
 }
