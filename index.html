@@ -9,7 +9,9 @@
   <meta name="description" content="आज का राशिफल पढ़ें। सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल हिंदी और English में।">
 
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -38,8 +40,14 @@
       min-height: 38px;
     }
 
-    .logo { font-size: 23px; font-weight: bold; }
-    .logo span { color: #f5c96b; }
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #f5c96b;
+    }
 
     .lang-btn {
       background: #f5c96b;
@@ -51,7 +59,12 @@
       cursor: pointer;
     }
 
-    /* Fixed-position zodiac ticker directly below header */
+    .lang-btn:hover {
+      background: #ffe09a;
+    }
+
+    /* Sticky zodiac ticker */
+
     .zodiac-ticker {
       position: sticky;
       top: 74px;
@@ -101,13 +114,22 @@
     }
 
     @keyframes zodiacScroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .ticker-track { animation: none; }
+      .ticker-track {
+        animation: none;
+      }
     }
+
+    /* Hero section */
 
     .hero {
       background: linear-gradient(135deg, #39245e, #65418b);
@@ -116,7 +138,10 @@
       padding: 65px 20px;
     }
 
-    .hero h1 { font-size: 38px; margin: 0 0 15px; }
+    .hero h1 {
+      font-size: 38px;
+      margin: 0 0 15px;
+    }
 
     .hero p {
       color: #eee5fa;
@@ -132,15 +157,29 @@
       font-weight: bold;
     }
 
+    /* Main content */
+
     main {
       max-width: 1150px;
       margin: auto;
       padding: 40px 20px;
     }
 
-    .section-title { text-align: center; margin-bottom: 25px; }
-    .section-title h2 { font-size: 28px; margin-bottom: 8px; }
-    .section-title p { color: #777; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .section-title h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: #777;
+    }
+
+    /* Horoscope periods */
 
     .periods {
       display: flex;
@@ -165,6 +204,8 @@
       color: white;
       border-color: #493365;
     }
+
+    /* Zodiac cards */
 
     .zodiac-grid {
       display: grid;
@@ -195,8 +236,16 @@
       margin: 0 auto 12px;
     }
 
-    .zodiac-card h3 { margin: 5px 0; font-size: 19px; }
-    .zodiac-card p { margin: 5px 0 0; color: #888; font-size: 14px; }
+    .zodiac-card h3 {
+      margin: 5px 0;
+      font-size: 19px;
+    }
+
+    .zodiac-card p {
+      margin: 5px 0 0;
+      color: #888;
+      font-size: 14px;
+    }
 
     .coming {
       display: inline-block;
@@ -208,6 +257,8 @@
       font-size: 12px;
     }
 
+    /* Information section */
+
     .info {
       text-align: center;
       background: white;
@@ -216,8 +267,16 @@
       margin-top: 40px;
     }
 
-    .info h2 { color: #493365; }
-    .info p { color: #777; line-height: 1.7; }
+    .info h2 {
+      color: #493365;
+    }
+
+    .info p {
+      color: #777;
+      line-height: 1.7;
+    }
+
+    /* Footer */
 
     footer {
       background: #30204f;
@@ -229,7 +288,17 @@
       line-height: 2;
     }
 
-    /* Fixed affiliate product panels: desktop only */
+    footer a {
+      color: #f5c96b;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Desktop product sidebars */
+
     .product-sidebar {
       display: none;
       position: fixed;
@@ -245,8 +314,13 @@
       box-shadow: 0 4px 18px rgba(40, 25, 65, 0.10);
     }
 
-    #leftProducts { left: 12px; }
-    #rightProducts { right: 12px; }
+    #leftProducts {
+      left: 12px;
+    }
+
+    #rightProducts {
+      right: 12px;
+    }
 
     .product-sidebar h3 {
       color: #493365;
@@ -254,6 +328,8 @@
       text-align: center;
       margin: 2px 0 10px;
     }
+
+    /* Product cards */
 
     .product-card {
       background: #fff;
@@ -297,7 +373,9 @@
       font-size: 11px;
     }
 
-    .product-card a:hover { background: #65418b; }
+    .product-card a:hover {
+      background: #65418b;
+    }
 
     .products-loading,
     .products-empty {
@@ -308,7 +386,8 @@
       padding: 10px 4px;
     }
 
-    /* Homepage product section for smaller screens */
+    /* Product section on smaller screens */
+
     .homepage-products {
       margin-top: 40px;
       background: white;
@@ -338,7 +417,6 @@
       height: 150px;
     }
 
-    /* Product image link */
     .product-card a.product-image-link {
       display: block;
       background: transparent;
@@ -346,7 +424,6 @@
       border-radius: 0;
     }
 
-    /* Product name link */
     .product-card a.product-name-link {
       display: inline;
       background: transparent;
@@ -363,42 +440,85 @@
       background: transparent;
     }
 
-    /* Desktop sidebars */
+    /* Desktop layout */
+
     @media (min-width: 1280px) {
-      .product-sidebar { display: block; }
-      .homepage-products { display: none; }
+      .product-sidebar {
+        display: block;
+      }
+
+      .homepage-products {
+        display: none;
+      }
     }
 
-    /* Central page spacing on medium desktop screens */
     @media (min-width: 1280px) and (max-width: 1599px) {
-      main { max-width: 850px; }
-      .product-sidebar { width: 165px; }
-      #leftProducts { left: 8px; }
-      #rightProducts { right: 8px; }
+      main {
+        max-width: 850px;
+      }
+
+      .product-sidebar {
+        width: 165px;
+      }
+
+      #leftProducts {
+        left: 8px;
+      }
+
+      #rightProducts {
+        right: 8px;
+      }
     }
 
     @media (min-width: 1600px) {
-      main { max-width: 1150px; }
+      main {
+        max-width: 1150px;
+      }
     }
 
     @media (max-width: 1279px) {
-      .product-sidebar { display: none !important; }
+      .product-sidebar {
+        display: none !important;
+      }
     }
+
+    /* Mobile layout */
 
     @media (max-width: 750px) {
-      .zodiac-grid { grid-template-columns: repeat(2, 1fr); }
-      .hero h1 { font-size: 29px; }
-      .homepage-products { padding: 20px 12px; }
+      .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .homepage-products {
+        padding: 20px 12px;
+      }
     }
 
-    @media (max-width: 380px) {
-      .zodiac-grid { grid-template-columns: 1fr; }
-      .homepage-product-grid {
-        grid-template-columns: 1fr;
+    @media (max-width: 480px) {
+      .nav {
+        flex-wrap: wrap;
+      }
+
+      .zodiac-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .ticker-item {
         padding: 0 16px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .zodiac-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .homepage-product-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -413,12 +533,12 @@
   </div>
 </header>
 
-<!-- Zodiac ticker directly below website header -->
+<!-- Moving zodiac ticker -->
 <div class="zodiac-ticker">
   <div class="ticker-track" id="tickerTrack"></div>
 </div>
 
-<!-- Fixed product panels -->
+<!-- Fixed desktop product panels -->
 <aside class="product-sidebar" id="leftProducts" aria-label="Affiliate products on left">
   <h3 id="leftProductTitle">Recommended Products</h3>
   <div class="products-loading">Loading products...</div>
@@ -429,21 +549,26 @@
   <div class="products-loading">Loading products...</div>
 </aside>
 
+<!-- Hero -->
 <section class="hero">
   <h1 id="heroTitle">आज का राशिफल</h1>
+
   <p id="heroDescription">
     जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी
     भविष्यवाणियां हिंदी और English में पढ़ें।
   </p>
+
   <div class="date" id="todayDate"></div>
 </section>
 
 <main>
+
   <div class="section-title">
     <h2 id="zodiacTitle">अपनी राशि चुनें</h2>
     <p id="zodiacDescription">अपनी राशि के अनुसार राशिफल देखें</p>
   </div>
 
+  <!-- Horoscope periods -->
   <div class="periods">
     <button class="period-btn active" data-period="today" onclick="selectPeriod(this)">आज</button>
     <button class="period-btn" data-period="week" onclick="selectPeriod(this)">साप्ताहिक</button>
@@ -451,57 +576,85 @@
     <button class="period-btn" data-period="year" onclick="selectPeriod(this)">वार्षिक</button>
   </div>
 
+  <!-- Zodiac cards -->
   <div class="zodiac-grid" id="zodiacGrid"></div>
 
-  <!-- Products shown below zodiac cards on smaller screens -->
+  <!-- Products for mobile and tablet -->
   <section class="homepage-products">
     <h2 id="homepageProductsTitle">आपके लिए सुझाए गए उत्पाद</h2>
+
     <div class="homepage-product-grid" id="homepageProductsGrid">
       <div class="products-loading">Loading products...</div>
     </div>
   </section>
 
+  <!-- About information -->
   <section class="info">
     <h2 id="aboutTitle">हमारे बारे में</h2>
+
     <p id="aboutDescription">
       Aaj Ka Rashifal पर आपको सभी 12 राशियों का दैनिक, साप्ताहिक,
       मासिक और वार्षिक राशिफल एक ही जगह मिलेगा।
     </p>
   </section>
+
 </main>
 
 <footer>
   © 2026 Aaj Ka Rashifal |
   <span id="footerText">आपका स्वागत है</span> |
 
-  <a href="about.html" id="aboutLink" style="color:#f5c96b;text-decoration:none;">
-    हमारे बारे में
-  </a> |
+  <a href="about.html" id="aboutLink">हमारे बारे में</a> |
 
-  <a href="contact.html" id="contactLink" style="color:#f5c96b;text-decoration:none;">
-    संपर्क करें
-  </a> |
+  <a href="contact.html" id="contactLink">संपर्क करें</a> |
 
-  <a href="privacy.html" id="privacyLink" style="color:#f5c96b;text-decoration:none;">
-    गोपनीयता नीति
-  </a> |
+  <a href="privacy.html" id="privacyLink">गोपनीयता नीति</a> |
 
-  <a href="disclaimer.html" id="disclaimerLink" style="color:#f5c96b;text-decoration:none;">
-    अस्वीकरण
-  </a> |
+  <a href="disclaimer.html" id="disclaimerLink">अस्वीकरण</a> |
 
-  <a href="terms.html" id="termsLink" style="color:#f5c96b;text-decoration:none;">
-    नियम और शर्तें
-  </a>
+  <a href="terms.html" id="termsLink">नियम और शर्तें</a>
 </footer>
 
 <script>
-// Horoscope API already used by the horoscope page.
+
+// Google Apps Script API
 const API_URL = "https://script.google.com/macros/s/AKfycbxgM07MampM8cGm4Tz67810UQgTU8pxiYYp-87R_Gy20Gn5-FgMH_L2FfhVRtoxCcPT-g/exec";
 
-// Load previously selected language.
-let currentLanguage = localStorage.getItem("rashifalLanguage") || "hi";
+// Saved language
+let currentLanguage =
+  localStorage.getItem("rashifalLanguage") || "hi";
 
+if (!["hi", "en"].includes(currentLanguage)) {
+  currentLanguage = "hi";
+}
+
+// Saved horoscope period
+let currentPeriod =
+  localStorage.getItem("rashifalPeriod") || "today";
+
+const validPeriods = ["today", "week", "month", "year"];
+
+if (!validPeriods.includes(currentPeriod)) {
+  currentPeriod = "today";
+}
+
+// Zodiac signs
+const signs = [
+  ["ARIES", "मेष", "Aries", "aries.png"],
+  ["TAURUS", "वृषभ", "Taurus", "taurus.png"],
+  ["GEMINI", "मिथुन", "Gemini", "gemini.png"],
+  ["CANCER", "कर्क", "Cancer", "cancer.png"],
+  ["LEO", "सिंह", "Leo", "leo.png"],
+  ["VIRGO", "कन्या", "Virgo", "virgo.png"],
+  ["LIBRA", "तुला", "Libra", "libra.png"],
+  ["SCORPIO", "वृश्चिक", "Scorpio", "scorpio.png"],
+  ["SAGITTARIUS", "धनु", "Sagittarius", "sagittarius.png"],
+  ["CAPRICORN", "मकर", "Capricorn", "capricorn.png"],
+  ["AQUARIUS", "कुंभ", "Aquarius", "aquarius.png"],
+  ["PISCES", "मीन", "Pisces", "pisces.png"]
+];
+
+// Language text
 const translations = {
   en: {
     heroTitle: "Today's Horoscope",
@@ -534,24 +687,10 @@ const translations = {
   }
 };
 
-const signs = [
-  ["ARIES", "मेष", "Aries", "aries.png"],
-  ["TAURUS", "वृषभ", "Taurus", "taurus.png"],
-  ["GEMINI", "मिथुन", "Gemini", "gemini.png"],
-  ["CANCER", "कर्क", "Cancer", "cancer.png"],
-  ["LEO", "सिंह", "Leo", "leo.png"],
-  ["VIRGO", "कन्या", "Virgo", "virgo.png"],
-  ["LIBRA", "तुला", "Libra", "libra.png"],
-  ["SCORPIO", "वृश्चिक", "Scorpio", "scorpio.png"],
-  ["SAGITTARIUS", "धनु", "Sagittarius", "sagittarius.png"],
-  ["CAPRICORN", "मकर", "Capricorn", "capricorn.png"],
-  ["AQUARIUS", "कुंभ", "Aquarius", "aquarius.png"],
-  ["PISCES", "मीन", "Pisces", "pisces.png"]
-];
-
-let currentPeriod = localStorage.getItem("rashifalPeriod") || "today";
+// All homepage products
 let homepageProducts = [];
 
+// Apply Hindi or English language
 function applyLanguage() {
   const t = translations[currentLanguage];
 
@@ -584,6 +723,7 @@ function applyLanguage() {
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
     button.textContent = t.periods[index];
+
     button.classList.toggle(
       "active",
       button.dataset.period === currentPeriod
@@ -597,22 +737,37 @@ function applyLanguage() {
   updateDate();
   renderSigns();
   renderZodiacTicker();
-
-  // Update product labels without making another API request.
   renderHomepageProducts(homepageProducts);
 }
 
+// Toggle language
 function toggleLanguage() {
-  currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+  currentLanguage =
+    currentLanguage === "hi" ? "en" : "hi";
+
   localStorage.setItem("rashifalLanguage", currentLanguage);
+
   applyLanguage();
 }
 
-// Render the moving zodiac ticker.
+// Display current date
+function updateDate() {
+  const locale =
+    currentLanguage === "hi" ? "hi-IN" : "en-IN";
+
+  document.getElementById("todayDate").textContent =
+    new Date().toLocaleDateString(locale, {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+}
+
+// Render moving zodiac ticker
 function renderZodiacTicker() {
   const track = document.getElementById("tickerTrack");
 
-  // Duplicate the 12 signs to create a continuous scrolling effect.
   const zodiacItems = [...signs, ...signs];
 
   track.innerHTML = zodiacItems.map(sign => `
@@ -626,6 +781,7 @@ function renderZodiacTicker() {
   `).join("");
 }
 
+// Render all 12 zodiac cards
 function renderSigns() {
   const grid = document.getElementById("zodiacGrid");
 
@@ -640,8 +796,11 @@ function renderSigns() {
         src="icons/${sign[3]}"
         alt="${currentLanguage === "hi" ? sign[1] : sign[2]}"
       >
+
       <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
+
       <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
+
       <span class="coming">
         ${currentLanguage === "hi" ? "राशिफल पढ़ें →" : "Read Horoscope →"}
       </span>
@@ -649,12 +808,14 @@ function renderSigns() {
   `).join("");
 }
 
+// Change horoscope period
 function selectPeriod(button) {
   document.querySelectorAll(".period-btn").forEach(btn => {
     btn.classList.remove("active");
   });
 
   button.classList.add("active");
+
   currentPeriod = button.dataset.period;
 
   localStorage.setItem("rashifalPeriod", currentPeriod);
@@ -663,20 +824,7 @@ function selectPeriod(button) {
   renderZodiacTicker();
 }
 
-function updateDate() {
-  const locale = currentLanguage === "hi" ? "hi-IN" : "en-IN";
-
-  document.getElementById("todayDate").textContent =
-    new Date().toLocaleDateString(locale, {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-}
-
-// Create one product card.
-// Image, product name and button all open the affiliate link.
+// Create a product card
 function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
@@ -690,7 +838,10 @@ function createProductCard(product) {
     image.src = product.imageUrl;
     image.alt = product.productName || "Product";
     image.loading = "lazy";
-    image.onerror = () => image.style.display = "none";
+
+    image.onerror = () => {
+      image.style.display = "none";
+    };
 
     if (affiliateUrl) {
       const imageLink = document.createElement("a");
@@ -718,11 +869,13 @@ function createProductCard(product) {
     nameLink.href = affiliateUrl;
     nameLink.target = "_blank";
     nameLink.rel = "sponsored noopener noreferrer";
-    nameLink.textContent = product.productName || "Recommended Product";
+    nameLink.textContent =
+      product.productName || "Recommended Product";
 
     name.appendChild(nameLink);
   } else {
-    name.textContent = product.productName || "Recommended Product";
+    name.textContent =
+      product.productName || "Recommended Product";
   }
 
   card.appendChild(name);
@@ -737,7 +890,7 @@ function createProductCard(product) {
     card.appendChild(category);
   }
 
-  // View Product button
+  // View product button
   if (affiliateUrl) {
     const link = document.createElement("a");
 
@@ -752,22 +905,24 @@ function createProductCard(product) {
   return card;
 }
 
-// Display products in desktop sidebars and smaller-screen product section.
+// Display products in desktop sidebars and mobile section
 function renderHomepageProducts(products) {
   const leftPanel = document.getElementById("leftProducts");
   const rightPanel = document.getElementById("rightProducts");
   const mobileGrid = document.getElementById("homepageProductsGrid");
 
-  // Remove old product cards and messages.
-  leftPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
-    .forEach(element => element.remove());
+  // Clear previous cards and messages
+  leftPanel.querySelectorAll(
+    ".product-card, .products-loading, .products-empty"
+  ).forEach(element => element.remove());
 
-  rightPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
-    .forEach(element => element.remove());
+  rightPanel.querySelectorAll(
+    ".product-card, .products-loading, .products-empty"
+  ).forEach(element => element.remove());
 
   mobileGrid.innerHTML = "";
 
-  // If no products are available.
+  // No products available
   if (!products || products.length === 0) {
     const emptyText = translations[currentLanguage].noProducts;
 
@@ -790,8 +945,8 @@ function renderHomepageProducts(products) {
     return;
   }
 
-  // Show all products in the smaller-screen section.
-  // Distribute products between left and right desktop sidebars.
+  // Show products on mobile and tablet
+  // Distribute products between desktop sidebars
   products.forEach((product, index) => {
     mobileGrid.appendChild(createProductCard(product));
 
@@ -804,32 +959,75 @@ function renderHomepageProducts(products) {
     }
   });
 
-  // If there is only one product, show it on both sides.
+  // If only one product exists, show it on both sides
   if (products.length === 1) {
     rightPanel.appendChild(createProductCard(products[0]));
   }
 }
 
-// Load general homepage products from Google Apps Script.
+// Load products from all 12 zodiac signs
 async function loadHomepageProducts() {
+  const loadingElements =
+    document.querySelectorAll(".products-loading");
+
   try {
-    const response = await fetch(
-      `${API_URL}?action=products&sign=ALL`
-    );
+    const requests = signs.map(async sign => {
+      const response = await fetch(
+        `${API_URL}?action=products&sign=${encodeURIComponent(sign[0])}`
+      );
 
-    if (!response.ok) {
-      throw new Error("Could not load products");
-    }
+      if (!response.ok) {
+        throw new Error("Product request failed for " + sign[0]);
+      }
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!result.success || !Array.isArray(result.products)) {
-      throw new Error("Invalid product response");
-    }
+      if (!result.success || !Array.isArray(result.products)) {
+        return [];
+      }
 
-    homepageProducts = result.products;
+      return result.products;
+    });
+
+    const results = await Promise.allSettled(requests);
+
+    const allProducts = [];
+
+    results.forEach(result => {
+      if (result.status === "fulfilled") {
+        allProducts.push(...result.value);
+      } else {
+        console.error("A zodiac product request failed:", result.reason);
+      }
+    });
+
+    // Remove duplicate products.
+    // Prefer product ID, then affiliate link, then product name and image.
+    const uniqueProducts = new Map();
+
+    allProducts.forEach(product => {
+      const key =
+        product.productId ||
+        product.Product_ID ||
+        product.affiliateLink ||
+        (
+          (product.productName || "") +
+          "|" +
+          (product.imageUrl || "")
+        );
+
+      if (key && !uniqueProducts.has(key)) {
+        uniqueProducts.set(key, product);
+      }
+    });
+
+    homepageProducts = Array.from(uniqueProducts.values());
 
     renderHomepageProducts(homepageProducts);
+
+    if (results.every(result => result.status === "rejected")) {
+      throw new Error("Could not load products for any zodiac sign");
+    }
 
   } catch (error) {
     console.error("Homepage products error:", error);
@@ -840,11 +1038,13 @@ async function loadHomepageProducts() {
       element.textContent = message;
     });
 
-    document.getElementById("homepageProductsGrid").textContent = message;
+    if (homepageProducts.length === 0) {
+      document.getElementById("homepageProductsGrid").textContent = message;
+    }
   }
 }
 
-// Initialize homepage.
+// Initialize homepage
 applyLanguage();
 loadHomepageProducts();
 
