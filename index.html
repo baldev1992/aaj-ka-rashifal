@@ -403,6 +403,8 @@ function applyLanguage() {
   document.getElementById("aboutTitle").textContent = t.aboutTitle;
   document.getElementById("aboutDescription").textContent = t.aboutDescription;
   document.getElementById("footerText").textContent = t.footerText;
+  document.getElementById("aboutLink").textContent =
+    currentLanguage === "hi" ? "हमारे बारे में" : "About Us";
   document.querySelector(".lang-btn").textContent = t.button;
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
