@@ -24,7 +24,8 @@
       padding: 18px 6%;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1001;
+      min-height: 74px;
     }
 
     .nav {
@@ -34,6 +35,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 15px;
+      min-height: 38px;
     }
 
     .logo { font-size: 23px; font-weight: bold; }
@@ -47,6 +49,64 @@
       padding: 10px 18px;
       font-weight: bold;
       cursor: pointer;
+    }
+
+    /* Fixed-position zodiac ticker directly below header */
+    .zodiac-ticker {
+      position: sticky;
+      top: 74px;
+      z-index: 1000;
+      width: 100%;
+      overflow: hidden;
+      background: #30204f;
+      padding: 12px 0;
+      border-bottom: 3px solid #f5c96b;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: zodiacScroll 45s linear infinite;
+      will-change: transform;
+    }
+
+    .zodiac-ticker:hover .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 25px;
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 15px;
+      font-weight: bold;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .ticker-item img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      background: white;
+      border-radius: 50%;
+      padding: 3px;
+    }
+
+    .ticker-item:hover {
+      color: #f5c96b;
+    }
+
+    @keyframes zodiacScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
     }
 
     .hero {
@@ -173,9 +233,9 @@
     .product-sidebar {
       display: none;
       position: fixed;
-      top: 105px;
+      top: 145px;
       width: 185px;
-      max-height: calc(100vh - 125px);
+      max-height: calc(100vh - 165px);
       overflow-y: auto;
       z-index: 900;
       padding: 10px;
@@ -303,61 +363,6 @@
       background: transparent;
     }
 
-    /* Moving Zodiac News Ticker */
-    .zodiac-ticker {
-      width: 100%;
-      overflow: hidden;
-      background: #30204f;
-      padding: 12px 0;
-      border-bottom: 3px solid #f5c96b;
-    }
-
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      animation: zodiacScroll 45s linear infinite;
-      will-change: transform;
-    }
-
-    .zodiac-ticker:hover .ticker-track {
-      animation-play-state: paused;
-    }
-
-    .ticker-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 0 25px;
-      color: white;
-      text-decoration: none;
-      white-space: nowrap;
-      font-size: 15px;
-      font-weight: bold;
-      border-right: 1px solid rgba(255,255,255,0.25);
-    }
-
-    .ticker-item img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      background: white;
-      border-radius: 50%;
-      padding: 3px;
-    }
-
-    .ticker-item:hover {
-      color: #f5c96b;
-    }
-
-    @keyframes zodiacScroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .ticker-track { animation: none; }
-    }
-
     /* Desktop sidebars */
     @media (min-width: 1280px) {
       .product-sidebar { display: block; }
@@ -391,6 +396,10 @@
       .homepage-product-grid {
         grid-template-columns: 1fr;
       }
+
+      .ticker-item {
+        padding: 0 16px;
+      }
     }
   </style>
 </head>
@@ -403,6 +412,11 @@
     <button class="lang-btn" onclick="toggleLanguage()">English</button>
   </div>
 </header>
+
+<!-- Zodiac ticker directly below website header -->
+<div class="zodiac-ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
 
 <!-- Fixed product panels -->
 <aside class="product-sidebar" id="leftProducts" aria-label="Affiliate products on left">
@@ -423,11 +437,6 @@
   </p>
   <div class="date" id="todayDate"></div>
 </section>
-
-<!-- Moving Zodiac Ticker -->
-<div class="zodiac-ticker">
-  <div class="ticker-track" id="tickerTrack"></div>
-</div>
 
 <main>
   <div class="section-title">
@@ -540,7 +549,7 @@ const signs = [
   ["PISCES", "मीन", "Pisces", "pisces.png"]
 ];
 
-let currentPeriod = "today";
+let currentPeriod = localStorage.getItem("rashifalPeriod") || "today";
 let homepageProducts = [];
 
 function applyLanguage() {
@@ -575,6 +584,10 @@ function applyLanguage() {
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
     button.textContent = t.periods[index];
+    button.classList.toggle(
+      "active",
+      button.dataset.period === currentPeriod
+    );
   });
 
   document.getElementById("leftProductTitle").textContent = t.productsTitle;
@@ -599,6 +612,7 @@ function toggleLanguage() {
 function renderZodiacTicker() {
   const track = document.getElementById("tickerTrack");
 
+  // Duplicate the 12 signs to create a continuous scrolling effect.
   const zodiacItems = [...signs, ...signs];
 
   track.innerHTML = zodiacItems.map(sign => `
@@ -642,6 +656,8 @@ function selectPeriod(button) {
 
   button.classList.add("active");
   currentPeriod = button.dataset.period;
+
+  localStorage.setItem("rashifalPeriod", currentPeriod);
 
   renderSigns();
   renderZodiacTicker();
