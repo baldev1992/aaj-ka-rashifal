@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions | Aaj Ka Rashifal</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fffaf0;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #4b267b;
+      color: white;
+      padding: 22px 15px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .language-button {
+      margin-top: 12px;
+      padding: 8px 18px;
+      border: 1px solid #f5c96b;
+      border-radius: 20px;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 35px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+    }
+
+    h2 {
+      color: #4b267b;
+      margin-top: 25px;
+    }
+
+    footer {
+      background: #4b267b;
+      color: white;
+      text-align: center;
+      padding: 22px 10px;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #f5c96b;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    @media(max-width: 600px) {
+      .container {
+        margin: 18px 12px;
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>
+    <a href="index.html">Aaj Ka Rashifal</a>
+  </h1>
+  <button class="language-button" onclick="toggleLanguage()">
+    English
+  </button>
+</header>
+
+<div class="container" id="content"></div>
+
+<footer>
+  © 2026 Aaj Ka Rashifal |
+  <a href="about.html">About Us</a> |
+  <a href="contact.html">Contact Us</a> |
+  <a href="privacy.html">Privacy Policy</a> |
+  <a href="disclaimer.html">Disclaimer</a> |
+  <a href="terms.html">Terms & Conditions</a>
+</footer>
+
+<script>
+let currentLanguage =
+  localStorage.getItem("rashifalLanguage") || "hi";
+
+function toggleLanguage() {
+  currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+  localStorage.setItem("rashifalLanguage", currentLanguage);
+  applyLanguage();
+}
+
+function applyLanguage() {
+  document.documentElement.lang = currentLanguage;
+
+  document.querySelector(".language-button").textContent =
+    currentLanguage === "hi" ? "English" : "हिंदी";
+
+  if (currentLanguage === "hi") {
+    document.getElementById("content").innerHTML = `
+      <h2>नियम और शर्तें</h2>
+      <p>अंतिम अपडेट: 16 नवंबर 2026</p>
+
+      <p>Aaj Ka Rashifal वेबसाइट का उपयोग करके आप नीचे दी गई नियमों और शर्तों से सहमत होते हैं। कृपया वेबसाइट का उपयोग करने से पहले इन्हें ध्यानपूर्वक पढ़ें।</p>
+
+      <h2>1. वेबसाइट का उपयोग</h2>
+      <p>इस वेबसाइट पर उपलब्ध राशिफल और अन्य सामग्री सामान्य जानकारी और मनोरंजन के उद्देश्य से प्रदान की जाती है। आप वेबसाइट का उपयोग केवल वैध और उचित उद्देश्यों के लिए कर सकते हैं।</p>
+
+      <h2>2. राशिफल की जानकारी</h2>
+      <p>राशिफल की सामग्री सामान्य मार्गदर्शन के लिए है। हम किसी भविष्यवाणी की सटीकता या परिणाम की गारंटी नहीं देते। महत्वपूर्ण निर्णय लेते समय केवल राशिफल पर निर्भर न रहें।</p>
+
+      <h2>3. चिकित्सा, वित्तीय और कानूनी सलाह</h2>
+      <p>वेबसाइट की सामग्री पेशेवर चिकित्सा, वित्तीय, कानूनी या करियर सलाह का विकल्प नहीं है। ऐसी सलाह के लिए संबंधित योग्य विशेषज्ञ से संपर्क करें।</p>
+
+      <h2>4. Affiliate Links और बाहरी वेबसाइटें</h2>
+      <p>इस वेबसाइट पर कुछ उत्पादों के affiliate links हो सकते हैं। यदि आप ऐसे लिंक से खरीदारी करते हैं, तो हमें बिना किसी अतिरिक्त लागत के कमीशन मिल सकता है।</p>
+      <p>बाहरी वेबसाइटों और उनके उत्पादों या सेवाओं पर हमारा नियंत्रण नहीं है। उनकी अपनी शर्तें और नीतियां लागू होंगी।</p>
+
+      <h2>5. सामग्री और बौद्धिक संपदा</h2>
+      <p>वेबसाइट का डिज़ाइन, लोगो, टेक्स्ट और अन्य सामग्री लागू कानूनों के अधीन हैं। हमारी अनुमति के बिना वेबसाइट की सामग्री को बड़े पैमाने पर कॉपी, पुनः प्रकाशित या व्यावसायिक रूप से उपयोग न करें।</p>
+
+      <h2>6. वेबसाइट की उपलब्धता</h2>
+      <p>हम वेबसाइट को सुचारू रूप से चलाने का प्रयास करते हैं, लेकिन बिना पूर्व सूचना के सामग्री, सुविधाओं या वेबसाइट की उपलब्धता में बदलाव या रुकावट हो सकती है।</p>
+
+      <h2>7. नियमों में बदलाव</h2>
+      <p>हम समय-समय पर इन नियमों और शर्तों को अपडेट कर सकते हैं। बदलाव इसी पेज पर प्रकाशित किए जाएंगे।</p>
+
+      <h2>8. संपर्क करें</h2>
+      <p>इन नियमों के बारे में किसी प्रश्न के लिए हमसे संपर्क करें:</p>
+      <p><strong>Email:</strong> inspirehubbyom@gmail.com</p>
+    `;
+  } else {
+    document.getElementById("content").innerHTML = `
+      <h2>Terms & Conditions</h2>
+      <p>Last Updated: November 16, 2026</p>
+
+      <p>By accessing or using the Aaj Ka Rashifal website, you agree to the following Terms & Conditions. Please read them carefully before using our website.</p>
+
+      <h2>1. Use of Website</h2>
+      <p>The horoscopes and other content available on this website are provided for general information and entertainment purposes. You agree to use the website only for lawful and appropriate purposes.</p>
+
+      <h2>2. Horoscope Information</h2>
+      <p>Horoscope content is intended for general guidance. We do not guarantee the accuracy of predictions or any particular outcome. Do not rely solely on horoscope content when making important decisions.</p>
+
+      <h2>3. Medical, Financial and Legal Advice</h2>
+      <p>Nothing on this website is a substitute for professional medical, financial, legal or career advice. Please consult a qualified professional for such advice.</p>
+
+      <h2>4. Affiliate Links and External Websites</h2>
+      <p>This website may contain affiliate links to products. If you make a purchase through these links, we may earn a commission at no additional cost to you.</p>
+      <p>We do not control external websites, their products or services. Their own terms and policies will apply when you visit them.</p>
+
+      <h2>5. Content and Intellectual Property</h2>
+      <p>The website design, logo, text and other content are subject to applicable laws. You may not copy, republish or commercially use substantial portions of our content without permission.</p>
+
+      <h2>6. Website Availability</h2>
+      <p>We try to keep the website available and functioning properly. However, content, features or website availability may change or be interrupted without prior notice.</p>
+
+      <h2>7. Changes to These Terms</h2>
+      <p>We may update these Terms & Conditions from time to time. Any changes will be published on this page.</p>
+
+      <h2>8. Contact Us</h2>
+      <p>If you have questions about these Terms & Conditions, please contact us:</p>
+      <p><strong>Email:</strong> inspirehubbyom@gmail.com</p>
+    `;
+  }
+}
+
+applyLanguage();
+</script>
+
+</body>
+</html>
