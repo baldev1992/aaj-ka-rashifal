@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -165,6 +166,7 @@
       padding: 25px 15px;
       margin-top: 30px;
       font-size: 14px;
+      line-height: 2;
     }
 
     /* Fixed affiliate product panels: desktop only */
@@ -246,11 +248,68 @@
       padding: 10px 4px;
     }
 
-    @media (min-width: 1280px) {
-      .product-sidebar { display: block; }
+    /* Homepage product section for smaller screens */
+    .homepage-products {
+      margin-top: 40px;
+      background: white;
+      border-radius: 15px;
+      padding: 25px 18px;
+      box-shadow: 0 3px 12px rgba(40,25,65,.06);
     }
 
-    /* Keep the central page clear of side panels on medium desktop screens */
+    .homepage-products h2 {
+      color: #493365;
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 23px;
+    }
+
+    .homepage-product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+    }
+
+    .homepage-product-grid .product-card {
+      margin: 0;
+    }
+
+    .homepage-product-grid .product-card img {
+      height: 150px;
+    }
+
+    /* Product image link */
+    .product-card a.product-image-link {
+      display: block;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    /* Product name link */
+    .product-card a.product-name-link {
+      display: inline;
+      background: transparent;
+      padding: 0;
+      color: #30204f;
+      text-decoration: none;
+      font-size: inherit;
+      font-weight: inherit;
+      border-radius: 0;
+    }
+
+    .product-card a.product-name-link:hover {
+      color: #65418b;
+      background: transparent;
+    }
+
+    /* Desktop sidebars */
+    @media (min-width: 1280px) {
+      .product-sidebar { display: block; }
+      .homepage-products { display: none; }
+    }
+
+    /* Central page spacing on medium desktop screens */
     @media (min-width: 1280px) and (max-width: 1599px) {
       main { max-width: 850px; }
       .product-sidebar { width: 165px; }
@@ -269,10 +328,14 @@
     @media (max-width: 750px) {
       .zodiac-grid { grid-template-columns: repeat(2, 1fr); }
       .hero h1 { font-size: 29px; }
+      .homepage-products { padding: 20px 12px; }
     }
 
     @media (max-width: 380px) {
       .zodiac-grid { grid-template-columns: 1fr; }
+      .homepage-product-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -321,6 +384,14 @@
 
   <div class="zodiac-grid" id="zodiacGrid"></div>
 
+  <!-- Products shown below zodiac cards on smaller screens -->
+  <section class="homepage-products">
+    <h2 id="homepageProductsTitle">आपके लिए सुझाए गए उत्पाद</h2>
+    <div class="homepage-product-grid" id="homepageProductsGrid">
+      <div class="products-loading">Loading products...</div>
+    </div>
+  </section>
+
   <section class="info">
     <h2 id="aboutTitle">हमारे बारे में</h2>
     <p id="aboutDescription">
@@ -352,12 +423,14 @@
   <a href="disclaimer.html" id="disclaimerLink"
      style="color:#f5c96b;text-decoration:none;">
     अस्वीकरण
-  </a>|
-<a href="terms.html" id="termsLink"
-   style="color:#f5c96b;text-decoration:none;">
-  नियम और शर्तें
-</a>
+  </a> |
+
+  <a href="terms.html" id="termsLink"
+     style="color:#f5c96b;text-decoration:none;">
+    नियम और शर्तें
+  </a>
 </footer>
+
 <script>
 // Horoscope API already used by the horoscope page.
 const API_URL = "https://script.google.com/macros/s/AKfycbxgM07MampM8cGm4Tz67810UQgTU8pxiYYp-87R_Gy20Gn5-FgMH_L2FfhVRtoxCcPT-g/exec";
@@ -380,6 +453,7 @@ const translations = {
     viewProduct: "View Product",
     noProducts: "No products available"
   },
+
   hi: {
     heroTitle: "आज का राशिफल",
     heroDescription: "जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी भविष्यवाणियां हिंदी और English में पढ़ें।",
@@ -390,7 +464,7 @@ const translations = {
     footerText: "आपका स्वागत है",
     periods: ["आज", "साप्ताहिक", "मासिक", "वार्षिक"],
     button: "English",
-    productsTitle: "आपके लिए सुझाव",
+    productsTitle: "आपके लिए सुझाए गए उत्पाद",
     viewProduct: "प्रोडक्ट देखें",
     noProducts: "अभी कोई प्रोडक्ट उपलब्ध नहीं है"
   }
@@ -412,9 +486,11 @@ const signs = [
 ];
 
 let currentPeriod = "today";
+let homepageProducts = [];
 
 function applyLanguage() {
   const t = translations[currentLanguage];
+
   document.documentElement.lang = currentLanguage;
 
   document.getElementById("heroTitle").textContent = t.heroTitle;
@@ -424,16 +500,22 @@ function applyLanguage() {
   document.getElementById("aboutTitle").textContent = t.aboutTitle;
   document.getElementById("aboutDescription").textContent = t.aboutDescription;
   document.getElementById("footerText").textContent = t.footerText;
+
   document.getElementById("aboutLink").textContent =
     currentLanguage === "hi" ? "हमारे बारे में" : "About Us";
+
   document.getElementById("contactLink").textContent =
     currentLanguage === "hi" ? "संपर्क करें" : "Contact Us";
+
   document.getElementById("privacyLink").textContent =
     currentLanguage === "hi" ? "गोपनीयता नीति" : "Privacy Policy";
+
   document.getElementById("disclaimerLink").textContent =
     currentLanguage === "hi" ? "अस्वीकरण" : "Disclaimer";
+
   document.getElementById("termsLink").textContent =
     currentLanguage === "hi" ? "नियम और शर्तें" : "Terms & Conditions";
+
   document.querySelector(".lang-btn").textContent = t.button;
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
@@ -442,11 +524,13 @@ function applyLanguage() {
 
   document.getElementById("leftProductTitle").textContent = t.productsTitle;
   document.getElementById("rightProductTitle").textContent = t.productsTitle;
+  document.getElementById("homepageProductsTitle").textContent = t.productsTitle;
 
   updateDate();
   renderSigns();
-  // Re-render product labels in the selected language without another API request.
-  if (homepageProducts.length) renderHomepageProducts(homepageProducts);
+
+  // Update product labels without making another API request.
+  renderHomepageProducts(homepageProducts);
 }
 
 function toggleLanguage() {
@@ -482,13 +566,16 @@ function selectPeriod(button) {
   document.querySelectorAll(".period-btn").forEach(btn => {
     btn.classList.remove("active");
   });
+
   button.classList.add("active");
   currentPeriod = button.dataset.period;
+
   renderSigns();
 }
 
 function updateDate() {
   const locale = currentLanguage === "hi" ? "hi-IN" : "en-IN";
+
   document.getElementById("todayDate").textContent =
     new Date().toLocaleDateString(locale, {
       weekday: "long",
@@ -498,106 +585,179 @@ function updateDate() {
     });
 }
 
-// Homepage shows general products. Add these rows in Affiliate_Products
-// with Zodiac_ID set to ALL and Status set to ACTIVE.
-let homepageProducts = [];
-
+// Create one product card.
+// Image, product name and button all open the affiliate link.
 function createProductCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
 
+  const affiliateUrl = product.affiliateLink || "";
+
+  // Product image
   if (product.imageUrl) {
     const image = document.createElement("img");
+
     image.src = product.imageUrl;
     image.alt = product.productName || "Product";
     image.loading = "lazy";
     image.onerror = () => image.style.display = "none";
-    card.appendChild(image);
+
+    if (affiliateUrl) {
+      const imageLink = document.createElement("a");
+
+      imageLink.className = "product-image-link";
+      imageLink.href = affiliateUrl;
+      imageLink.target = "_blank";
+      imageLink.rel = "sponsored noopener noreferrer";
+
+      imageLink.appendChild(image);
+      card.appendChild(imageLink);
+    } else {
+      card.appendChild(image);
+    }
   }
 
+  // Product name
   const name = document.createElement("div");
   name.className = "product-name";
-  name.textContent = product.productName || "Recommended Product";
+
+  if (affiliateUrl) {
+    const nameLink = document.createElement("a");
+
+    nameLink.className = "product-name-link";
+    nameLink.href = affiliateUrl;
+    nameLink.target = "_blank";
+    nameLink.rel = "sponsored noopener noreferrer";
+    nameLink.textContent = product.productName || "Recommended Product";
+
+    name.appendChild(nameLink);
+  } else {
+    name.textContent = product.productName || "Recommended Product";
+  }
+
   card.appendChild(name);
 
+  // Product category
   if (product.category) {
     const category = document.createElement("div");
+
     category.className = "product-category";
     category.textContent = product.category;
+
     card.appendChild(category);
   }
 
-  if (product.affiliateLink) {
+  // View Product button
+  if (affiliateUrl) {
     const link = document.createElement("a");
-    link.href = product.affiliateLink;
+
+    link.href = affiliateUrl;
     link.target = "_blank";
     link.rel = "sponsored noopener noreferrer";
     link.textContent = translations[currentLanguage].viewProduct;
+
     card.appendChild(link);
   }
 
   return card;
 }
 
+// Display products in desktop sidebars and smaller-screen product section.
 function renderHomepageProducts(products) {
   const leftPanel = document.getElementById("leftProducts");
   const rightPanel = document.getElementById("rightProducts");
+  const mobileGrid = document.getElementById("homepageProductsGrid");
 
+  // Remove old product cards and messages.
   leftPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
     .forEach(element => element.remove());
+
   rightPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
     .forEach(element => element.remove());
 
+  mobileGrid.innerHTML = "";
+
+  // If no products are available.
   if (!products || products.length === 0) {
+    const emptyText = translations[currentLanguage].noProducts;
+
     [leftPanel, rightPanel].forEach(panel => {
       const empty = document.createElement("div");
+
       empty.className = "products-empty";
-      empty.textContent = translations[currentLanguage].noProducts;
+      empty.textContent = emptyText;
+
       panel.appendChild(empty);
     });
+
+    const mobileEmpty = document.createElement("div");
+
+    mobileEmpty.className = "products-empty";
+    mobileEmpty.textContent = emptyText;
+
+    mobileGrid.appendChild(mobileEmpty);
+
     return;
   }
 
+  // Show all products in the smaller-screen section.
+  // Distribute products between left and right desktop sidebars.
   products.forEach((product, index) => {
-    const card = createProductCard(product);
+    mobileGrid.appendChild(createProductCard(product));
+
+    const sidebarCard = createProductCard(product);
+
     if (index % 2 === 0) {
-      leftPanel.appendChild(card);
+      leftPanel.appendChild(sidebarCard);
     } else {
-      rightPanel.appendChild(card);
+      rightPanel.appendChild(sidebarCard);
     }
   });
 
-  // Keep both sides populated even when the sheet has only one product.
+  // If there is only one product, show it on both sides.
   if (products.length === 1) {
     rightPanel.appendChild(createProductCard(products[0]));
   }
 }
 
+// Load general homepage products from Google Apps Script.
 async function loadHomepageProducts() {
   try {
     const response = await fetch(
       `${API_URL}?action=products&sign=ALL`
     );
-    if (!response.ok) throw new Error("Could not load products");
+
+    if (!response.ok) {
+      throw new Error("Could not load products");
+    }
 
     const result = await response.json();
+
     if (!result.success || !Array.isArray(result.products)) {
       throw new Error("Invalid product response");
     }
 
     homepageProducts = result.products;
+
     renderHomepageProducts(homepageProducts);
+
   } catch (error) {
     console.error("Homepage products error:", error);
+
+    const message = translations[currentLanguage].noProducts;
+
     document.querySelectorAll(".products-loading").forEach(element => {
-      element.textContent = translations[currentLanguage].noProducts;
+      element.textContent = message;
     });
+
+    document.getElementById("homepageProductsGrid").textContent = message;
   }
 }
 
 // Initialize homepage.
 applyLanguage();
 loadHomepageProducts();
+
 </script>
 
 </body>
