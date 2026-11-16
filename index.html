@@ -333,13 +333,23 @@
 <footer>
   © 2026 Aaj Ka Rashifal |
   <span id="footerText">आपका स्वागत है</span> |
-  <a href="about.html" id="aboutLink" style="color:#f5c96b;text-decoration:none;">
+
+  <a href="about.html" id="aboutLink"
+     style="color:#f5c96b;text-decoration:none;">
     हमारे बारे में
   </a> |
-  <a href="contact.html" id="contactLink" style="color:#f5c96b;text-decoration:none;">
+
+  <a href="contact.html" id="contactLink"
+     style="color:#f5c96b;text-decoration:none;">
     संपर्क करें
+  </a> |
+
+  <a href="privacy.html" id="privacyLink"
+     style="color:#f5c96b;text-decoration:none;">
+    गोपनीयता नीति
   </a>
-</footer><script>
+</footer>
+<script>
 // Horoscope API already used by the horoscope page.
 const API_URL = "https://script.google.com/macros/s/AKfycbxgM07MampM8cGm4Tz67810UQgTU8pxiYYp-87R_Gy20Gn5-FgMH_L2FfhVRtoxCcPT-g/exec";
 
@@ -409,6 +419,8 @@ function applyLanguage() {
     currentLanguage === "hi" ? "हमारे बारे में" : "About Us";
   document.getElementById("contactLink").textContent =
     currentLanguage === "hi" ? "संपर्क करें" : "Contact Us";
+  document.getElementById("privacyLink").textContent =
+    currentLanguage === "hi" ? "गोपनीयता नीति" : "Privacy Policy";
   document.querySelector(".lang-btn").textContent = t.button;
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
