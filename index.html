@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -9,9 +8,7 @@
   <meta name="description" content="आज का राशिफल पढ़ें। सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल हिंदी और English में।">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -38,14 +35,8 @@
       gap: 15px;
     }
 
-    .logo {
-      font-size: 23px;
-      font-weight: bold;
-    }
-
-    .logo span {
-      color: #f5c96b;
-    }
+    .logo { font-size: 23px; font-weight: bold; }
+    .logo span { color: #f5c96b; }
 
     .lang-btn {
       background: #f5c96b;
@@ -64,10 +55,7 @@
       padding: 65px 20px;
     }
 
-    .hero h1 {
-      font-size: 38px;
-      margin: 0 0 15px;
-    }
+    .hero h1 { font-size: 38px; margin: 0 0 15px; }
 
     .hero p {
       color: #eee5fa;
@@ -89,19 +77,9 @@
       padding: 40px 20px;
     }
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .section-title h2 {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .section-title p {
-      color: #777;
-    }
+    .section-title { text-align: center; margin-bottom: 25px; }
+    .section-title h2 { font-size: 28px; margin-bottom: 8px; }
+    .section-title p { color: #777; }
 
     .periods {
       display: flex;
@@ -156,16 +134,8 @@
       margin: 0 auto 12px;
     }
 
-    .zodiac-card h3 {
-      margin: 5px 0;
-      font-size: 19px;
-    }
-
-    .zodiac-card p {
-      margin: 5px 0 0;
-      color: #888;
-      font-size: 14px;
-    }
+    .zodiac-card h3 { margin: 5px 0; font-size: 19px; }
+    .zodiac-card p { margin: 5px 0 0; color: #888; font-size: 14px; }
 
     .coming {
       display: inline-block;
@@ -185,14 +155,8 @@
       margin-top: 40px;
     }
 
-    .info h2 {
-      color: #493365;
-    }
-
-    .info p {
-      color: #777;
-      line-height: 1.7;
-    }
+    .info h2 { color: #493365; }
+    .info p { color: #777; line-height: 1.7; }
 
     footer {
       background: #30204f;
@@ -203,20 +167,112 @@
       font-size: 14px;
     }
 
-    @media (max-width: 750px) {
-      .zodiac-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    /* Fixed affiliate product panels: desktop only */
+    .product-sidebar {
+      display: none;
+      position: fixed;
+      top: 105px;
+      width: 185px;
+      max-height: calc(100vh - 125px);
+      overflow-y: auto;
+      z-index: 900;
+      padding: 10px;
+      background: rgba(250, 248, 243, 0.97);
+      border: 1px solid #e9e1ef;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(40, 25, 65, 0.10);
+    }
 
-      .hero h1 {
-        font-size: 29px;
-      }
+    #leftProducts { left: 12px; }
+    #rightProducts { right: 12px; }
+
+    .product-sidebar h3 {
+      color: #493365;
+      font-size: 14px;
+      text-align: center;
+      margin: 2px 0 10px;
+    }
+
+    .product-card {
+      background: #fff;
+      border: 1px solid #eee7f3;
+      border-radius: 10px;
+      padding: 9px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 115px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 7px;
+    }
+
+    .product-card .product-name {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #30204f;
+      font-weight: bold;
+      margin: 5px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .product-card .product-category {
+      font-size: 11px;
+      color: #888;
+      margin: 4px 0 8px;
+    }
+
+    .product-card a {
+      display: inline-block;
+      background: #493365;
+      color: white;
+      text-decoration: none;
+      border-radius: 16px;
+      padding: 7px 11px;
+      font-size: 11px;
+    }
+
+    .product-card a:hover { background: #65418b; }
+
+    .products-loading,
+    .products-empty {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 10px 4px;
+    }
+
+    @media (min-width: 1280px) {
+      .product-sidebar { display: block; }
+    }
+
+    /* Keep the central page clear of side panels on medium desktop screens */
+    @media (min-width: 1280px) and (max-width: 1599px) {
+      main { max-width: 850px; }
+      .product-sidebar { width: 165px; }
+      #leftProducts { left: 8px; }
+      #rightProducts { right: 8px; }
+    }
+
+    @media (min-width: 1600px) {
+      main { max-width: 1150px; }
+    }
+
+    @media (max-width: 1279px) {
+      .product-sidebar { display: none !important; }
+    }
+
+    @media (max-width: 750px) {
+      .zodiac-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 29px; }
     }
 
     @media (max-width: 380px) {
-      .zodiac-grid {
-        grid-template-columns: 1fr;
-      }
+      .zodiac-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -230,19 +286,27 @@
   </div>
 </header>
 
+<!-- Fixed product panels -->
+<aside class="product-sidebar" id="leftProducts" aria-label="Affiliate products on left">
+  <h3 id="leftProductTitle">Recommended Products</h3>
+  <div class="products-loading">Loading products...</div>
+</aside>
+
+<aside class="product-sidebar" id="rightProducts" aria-label="Affiliate products on right">
+  <h3 id="rightProductTitle">Recommended Products</h3>
+  <div class="products-loading">Loading products...</div>
+</aside>
+
 <section class="hero">
   <h1 id="heroTitle">आज का राशिफल</h1>
-
   <p id="heroDescription">
     जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी
     भविष्यवाणियां हिंदी और English में पढ़ें।
   </p>
-
   <div class="date" id="todayDate"></div>
 </section>
 
 <main>
-
   <div class="section-title">
     <h2 id="zodiacTitle">अपनी राशि चुनें</h2>
     <p id="zodiacDescription">अपनी राशि के अनुसार राशिफल देखें</p>
@@ -259,13 +323,11 @@
 
   <section class="info">
     <h2 id="aboutTitle">हमारे बारे में</h2>
-
     <p id="aboutDescription">
       Aaj Ka Rashifal पर आपको सभी 12 राशियों का दैनिक, साप्ताहिक,
       मासिक और वार्षिक राशिफल एक ही जगह मिलेगा।
     </p>
   </section>
-
 </main>
 
 <footer>
@@ -273,15 +335,13 @@
 </footer>
 
 <script>
+// Horoscope API already used by the horoscope page.
+const API_URL = "https://script.google.com/macros/s/AKfycbxgM07MampM8cGm4Tz67810UQgTU8pxiYYp-87R_Gy20Gn5-FgMH_L2FfhVRtoxCcPT-g/exec";
 
 // Load previously selected language.
-// Hindi is the default only for first-time visitors.
-let currentLanguage =
-  localStorage.getItem("rashifalLanguage") || "hi";
+let currentLanguage = localStorage.getItem("rashifalLanguage") || "hi";
 
-// Translations
 const translations = {
-
   en: {
     heroTitle: "Today's Horoscope",
     heroDescription: "Discover your horoscope. Read predictions about career, finance, love and health in Hindi and English.",
@@ -291,9 +351,11 @@ const translations = {
     aboutDescription: "Aaj Ka Rashifal brings daily, weekly, monthly and yearly horoscopes for all 12 zodiac signs in one place.",
     footerText: "Welcome to Aaj Ka Rashifal",
     periods: ["Today", "Weekly", "Monthly", "Yearly"],
-    button: "हिंदी"
+    button: "हिंदी",
+    productsTitle: "Recommended Products",
+    viewProduct: "View Product",
+    noProducts: "No products available"
   },
-
   hi: {
     heroTitle: "आज का राशिफल",
     heroDescription: "जानिए अपनी राशि का भविष्य। करियर, धन, प्रेम और स्वास्थ्य से जुड़ी भविष्यवाणियां हिंदी और English में पढ़ें।",
@@ -303,12 +365,13 @@ const translations = {
     aboutDescription: "Aaj Ka Rashifal पर आपको सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल एक ही जगह मिलेगा।",
     footerText: "आपका स्वागत है",
     periods: ["आज", "साप्ताहिक", "मासिक", "वार्षिक"],
-    button: "English"
+    button: "English",
+    productsTitle: "आपके लिए सुझाव",
+    viewProduct: "प्रोडक्ट देखें",
+    noProducts: "अभी कोई प्रोडक्ट उपलब्ध नहीं है"
   }
-
 };
 
-// Zodiac signs
 const signs = [
   ["ARIES", "मेष", "Aries", "aries.png"],
   ["TAURUS", "वृषभ", "Taurus", "taurus.png"],
@@ -324,122 +387,74 @@ const signs = [
   ["PISCES", "मीन", "Pisces", "pisces.png"]
 ];
 
-// Default selected period
 let currentPeriod = "today";
 
-// Apply selected language
 function applyLanguage() {
-
   const t = translations[currentLanguage];
-
   document.documentElement.lang = currentLanguage;
 
-  document.getElementById("heroTitle").textContent =
-    t.heroTitle;
-
-  document.getElementById("heroDescription").textContent =
-    t.heroDescription;
-
-  document.getElementById("zodiacTitle").textContent =
-    t.zodiacTitle;
-
-  document.getElementById("zodiacDescription").textContent =
-    t.zodiacDescription;
-
-  document.getElementById("aboutTitle").textContent =
-    t.aboutTitle;
-
-  document.getElementById("aboutDescription").textContent =
-    t.aboutDescription;
-
-  document.getElementById("footerText").textContent =
-    t.footerText;
-
-  document.querySelector(".lang-btn").textContent =
-    t.button;
+  document.getElementById("heroTitle").textContent = t.heroTitle;
+  document.getElementById("heroDescription").textContent = t.heroDescription;
+  document.getElementById("zodiacTitle").textContent = t.zodiacTitle;
+  document.getElementById("zodiacDescription").textContent = t.zodiacDescription;
+  document.getElementById("aboutTitle").textContent = t.aboutTitle;
+  document.getElementById("aboutDescription").textContent = t.aboutDescription;
+  document.getElementById("footerText").textContent = t.footerText;
+  document.querySelector(".lang-btn").textContent = t.button;
 
   document.querySelectorAll(".period-btn").forEach((button, index) => {
     button.textContent = t.periods[index];
   });
 
+  document.getElementById("leftProductTitle").textContent = t.productsTitle;
+  document.getElementById("rightProductTitle").textContent = t.productsTitle;
+
   updateDate();
   renderSigns();
-
+  // Re-render product labels in the selected language without another API request.
+  if (homepageProducts.length) renderHomepageProducts(homepageProducts);
 }
 
-// Change language only when visitor clicks the button
 function toggleLanguage() {
-
-  currentLanguage =
-    currentLanguage === "hi" ? "en" : "hi";
-
-  localStorage.setItem(
-    "rashifalLanguage",
-    currentLanguage
-  );
-
+  currentLanguage = currentLanguage === "hi" ? "en" : "hi";
+  localStorage.setItem("rashifalLanguage", currentLanguage);
   applyLanguage();
-
 }
 
-// Display zodiac cards
 function renderSigns() {
-
   const grid = document.getElementById("zodiacGrid");
 
   grid.innerHTML = signs.map(sign => `
-
     <a
       class="zodiac-card"
       href="horoscope.html?sign=${sign[0]}&period=${currentPeriod}"
       style="text-decoration:none;color:inherit;display:block;"
     >
-
       <img
         class="zodiac-icon"
         src="icons/${sign[3]}"
         alt="${currentLanguage === "hi" ? sign[1] : sign[2]}"
       >
-
-      <h3>
-        ${currentLanguage === "hi" ? sign[1] : sign[2]}
-      </h3>
-
-      <p>
-        ${currentLanguage === "hi" ? sign[2] : sign[1]}
-      </p>
-
+      <h3>${currentLanguage === "hi" ? sign[1] : sign[2]}</h3>
+      <p>${currentLanguage === "hi" ? sign[2] : sign[1]}</p>
       <span class="coming">
         ${currentLanguage === "hi" ? "राशिफल पढ़ें →" : "Read Horoscope →"}
       </span>
-
     </a>
-
   `).join("");
-
 }
 
-// Select daily, weekly, monthly or yearly
 function selectPeriod(button) {
-
   document.querySelectorAll(".period-btn").forEach(btn => {
     btn.classList.remove("active");
   });
-
   button.classList.add("active");
-
   currentPeriod = button.dataset.period;
-
   renderSigns();
-
 }
 
-// Update date according to selected language
 function updateDate() {
-
-  const locale =
-    currentLanguage === "hi" ? "hi-IN" : "en-IN";
-
+  const locale = currentLanguage === "hi" ? "hi-IN" : "en-IN";
   document.getElementById("todayDate").textContent =
     new Date().toLocaleDateString(locale, {
       weekday: "long",
@@ -447,12 +462,108 @@ function updateDate() {
       month: "long",
       year: "numeric"
     });
-
 }
 
-// Initialize homepage using saved language
-applyLanguage();
+// Homepage shows general products. Add these rows in Affiliate_Products
+// with Zodiac_ID set to ALL and Status set to ACTIVE.
+let homepageProducts = [];
 
+function createProductCard(product) {
+  const card = document.createElement("div");
+  card.className = "product-card";
+
+  if (product.imageUrl) {
+    const image = document.createElement("img");
+    image.src = product.imageUrl;
+    image.alt = product.productName || "Product";
+    image.loading = "lazy";
+    image.onerror = () => image.style.display = "none";
+    card.appendChild(image);
+  }
+
+  const name = document.createElement("div");
+  name.className = "product-name";
+  name.textContent = product.productName || "Recommended Product";
+  card.appendChild(name);
+
+  if (product.category) {
+    const category = document.createElement("div");
+    category.className = "product-category";
+    category.textContent = product.category;
+    card.appendChild(category);
+  }
+
+  if (product.affiliateLink) {
+    const link = document.createElement("a");
+    link.href = product.affiliateLink;
+    link.target = "_blank";
+    link.rel = "sponsored noopener noreferrer";
+    link.textContent = translations[currentLanguage].viewProduct;
+    card.appendChild(link);
+  }
+
+  return card;
+}
+
+function renderHomepageProducts(products) {
+  const leftPanel = document.getElementById("leftProducts");
+  const rightPanel = document.getElementById("rightProducts");
+
+  leftPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
+    .forEach(element => element.remove());
+  rightPanel.querySelectorAll(".product-card, .products-loading, .products-empty")
+    .forEach(element => element.remove());
+
+  if (!products || products.length === 0) {
+    [leftPanel, rightPanel].forEach(panel => {
+      const empty = document.createElement("div");
+      empty.className = "products-empty";
+      empty.textContent = translations[currentLanguage].noProducts;
+      panel.appendChild(empty);
+    });
+    return;
+  }
+
+  products.forEach((product, index) => {
+    const card = createProductCard(product);
+    if (index % 2 === 0) {
+      leftPanel.appendChild(card);
+    } else {
+      rightPanel.appendChild(card);
+    }
+  });
+
+  // Keep both sides populated even when the sheet has only one product.
+  if (products.length === 1) {
+    rightPanel.appendChild(createProductCard(products[0]));
+  }
+}
+
+async function loadHomepageProducts() {
+  try {
+    const response = await fetch(
+      `${API_URL}?action=products&sign=ALL`
+    );
+    if (!response.ok) throw new Error("Could not load products");
+
+    const result = await response.json();
+    if (!result.success || !Array.isArray(result.products)) {
+      throw new Error("Invalid product response");
+    }
+
+    homepageProducts = result.products;
+    renderHomepageProducts(homepageProducts);
+  } catch (error) {
+    console.error("Homepage products error:", error);
+    document.querySelectorAll(".products-loading").forEach(element => {
+      element.textContent = translations[currentLanguage].noProducts;
+    });
+  }
+}
+
+// Initialize homepage.
+applyLanguage();
+loadHomepageProducts();
 </script>
 
 </body>
