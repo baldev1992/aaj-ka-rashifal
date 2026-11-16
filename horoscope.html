@@ -146,7 +146,88 @@
       color: #777;
     }
 
+    /* Affiliate product recommendations */
+    .products-panel {
+      margin-top: 24px;
+      background: white;
+      border-radius: 16px;
+      padding: 26px 22px;
+      box-shadow: 0 3px 14px rgba(40,25,65,.06);
+    }
+
+    .products-panel h2 {
+      color: #493365;
+      text-align: center;
+      margin: 0 0 20px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+    }
+
+    .product-card {
+      border: 1px solid #eee8f4;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 12px;
+    }
+
+    .product-image-placeholder {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #faf8f3;
+      color: #8a6caa;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .product-card h3 {
+      color: #493365;
+      font-size: 17px;
+      margin: 8px 0;
+    }
+
+    .product-category {
+      color: #777;
+      font-size: 13px;
+      margin: 6px 0 12px;
+    }
+
+    .product-link {
+      display: inline-block;
+      padding: 9px 16px;
+      border-radius: 20px;
+      background: #493365;
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .product-link:hover {
+      background: #30204f;
+    }
+
     @media (max-width: 480px) {
+      .products-panel {
+        padding: 22px 15px;
+      }
+
+
       .nav {
         flex-wrap: wrap;
       }
@@ -204,6 +285,11 @@
       <div id="horoscopeContent"></div>
     </div>
 
+  </section>
+
+  <section class="products-panel" id="productsPanel" hidden>
+    <h2 id="productsTitle">आपके लिए सुझाए गए उत्पाद</h2>
+    <div class="product-grid" id="productsGrid"></div>
   </section>
 </main>
 
@@ -408,6 +494,106 @@ function renderHoroscope() {
 
 }
 
+// Load and display affiliate products for the current zodiac sign
+function loadAffiliateProducts() {
+  const panel = document.getElementById("productsPanel");
+  const grid = document.getElementById("productsGrid");
+
+  fetch(
+    `${API_URL}?action=products&sign=${encodeURIComponent(signId)}`
+  )
+    .then(response => response.json())
+    .then(result => {
+      grid.innerHTML = "";
+
+      if (!result.success || !Array.isArray(result.products) ||
+          result.products.length === 0) {
+        panel.hidden = true;
+        return;
+      }
+
+      result.products.forEach(product => {
+        const card = document.createElement("article");
+        card.className = "product-card";
+
+        if (product.imageUrl) {
+          const image = document.createElement("img");
+          image.className = "product-image";
+          image.src = product.imageUrl;
+          image.alt = product.productName || "Product";
+          image.loading = "lazy";
+          image.onerror = () => {
+            const placeholder = document.createElement("div");
+            placeholder.className = "product-image-placeholder";
+            placeholder.textContent =
+              currentLanguage === "hi" ? "चित्र उपलब्ध नहीं" : "Image unavailable";
+            image.replaceWith(placeholder);
+          };
+          card.appendChild(image);
+        } else {
+          const placeholder = document.createElement("div");
+          placeholder.className = "product-image-placeholder";
+          placeholder.textContent =
+            currentLanguage === "hi" ? "चित्र जल्द उपलब्ध होगा" : "Image coming soon";
+          card.appendChild(placeholder);
+        }
+
+        const name = document.createElement("h3");
+        name.textContent = product.productName || "";
+        card.appendChild(name);
+
+        if (product.category) {
+          const category = document.createElement("p");
+          category.className = "product-category";
+          category.textContent = product.category;
+          card.appendChild(category);
+        }
+
+        if (product.affiliateLink) {
+          const link = document.createElement("a");
+          link.className = "product-link";
+          link.href = product.affiliateLink;
+          link.target = "_blank";
+          link.rel = "sponsored noopener noreferrer";
+          link.textContent =
+            currentLanguage === "hi" ? "उत्पाद देखें" : "View Product";
+          card.appendChild(link);
+        }
+
+        grid.appendChild(card);
+      });
+
+      panel.hidden = false;
+      updateProductsLanguage();
+    })
+    .catch(error => {
+      console.error("Affiliate products could not be loaded:", error);
+      panel.hidden = true;
+    });
+}
+
+function updateProductsLanguage() {
+  const hi = currentLanguage === "hi";
+
+  document.getElementById("productsTitle").textContent =
+    hi ? "आपके लिए सुझाए गए उत्पाद" : "Recommended Products";
+
+  document.querySelectorAll(".product-link").forEach(link => {
+    link.textContent = hi ? "उत्पाद देखें" : "View Product";
+  });
+
+  document.querySelectorAll(".product-image-placeholder").forEach(placeholder => {
+    if (placeholder.textContent === "चित्र जल्द उपलब्ध होगा" ||
+        placeholder.textContent === "Image coming soon") {
+      placeholder.textContent =
+        hi ? "चित्र जल्द उपलब्ध होगा" : "Image coming soon";
+    } else {
+      placeholder.textContent =
+        hi ? "चित्र उपलब्ध नहीं" : "Image unavailable";
+    }
+  });
+}
+
 // Apply language to the complete page
 function applyLanguage() {
 
@@ -461,6 +647,7 @@ function applyLanguage() {
 
   updateDate();
   renderHoroscope();
+  updateProductsLanguage();
 
   document.title =
     hi ? "राशिफल | Aaj Ka Rashifal" : "Horoscope | Aaj Ka Rashifal";
@@ -491,6 +678,9 @@ function toggleLanguage() {
 // Load saved language when page opens
 applyLanguage();
 showLoadingMessage();
+// Fetch affiliate products for this zodiac sign
+loadAffiliateProducts();
+
 // Fetch horoscope data
 fetch(
   `${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`
