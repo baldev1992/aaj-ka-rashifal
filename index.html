@@ -303,6 +303,61 @@
       background: transparent;
     }
 
+    /* Moving Zodiac News Ticker */
+    .zodiac-ticker {
+      width: 100%;
+      overflow: hidden;
+      background: #30204f;
+      padding: 12px 0;
+      border-bottom: 3px solid #f5c96b;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: zodiacScroll 45s linear infinite;
+      will-change: transform;
+    }
+
+    .zodiac-ticker:hover .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 25px;
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 15px;
+      font-weight: bold;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .ticker-item img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      background: white;
+      border-radius: 50%;
+      padding: 3px;
+    }
+
+    .ticker-item:hover {
+      color: #f5c96b;
+    }
+
+    @keyframes zodiacScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
     /* Desktop sidebars */
     @media (min-width: 1280px) {
       .product-sidebar { display: block; }
@@ -369,6 +424,11 @@
   <div class="date" id="todayDate"></div>
 </section>
 
+<!-- Moving Zodiac Ticker -->
+<div class="zodiac-ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
 <main>
   <div class="section-title">
     <h2 id="zodiacTitle">अपनी राशि चुनें</h2>
@@ -405,28 +465,23 @@
   © 2026 Aaj Ka Rashifal |
   <span id="footerText">आपका स्वागत है</span> |
 
-  <a href="about.html" id="aboutLink"
-     style="color:#f5c96b;text-decoration:none;">
+  <a href="about.html" id="aboutLink" style="color:#f5c96b;text-decoration:none;">
     हमारे बारे में
   </a> |
 
-  <a href="contact.html" id="contactLink"
-     style="color:#f5c96b;text-decoration:none;">
+  <a href="contact.html" id="contactLink" style="color:#f5c96b;text-decoration:none;">
     संपर्क करें
   </a> |
 
-  <a href="privacy.html" id="privacyLink"
-     style="color:#f5c96b;text-decoration:none;">
+  <a href="privacy.html" id="privacyLink" style="color:#f5c96b;text-decoration:none;">
     गोपनीयता नीति
   </a> |
 
-  <a href="disclaimer.html" id="disclaimerLink"
-     style="color:#f5c96b;text-decoration:none;">
+  <a href="disclaimer.html" id="disclaimerLink" style="color:#f5c96b;text-decoration:none;">
     अस्वीकरण
   </a> |
 
-  <a href="terms.html" id="termsLink"
-     style="color:#f5c96b;text-decoration:none;">
+  <a href="terms.html" id="termsLink" style="color:#f5c96b;text-decoration:none;">
     नियम और शर्तें
   </a>
 </footer>
@@ -528,6 +583,7 @@ function applyLanguage() {
 
   updateDate();
   renderSigns();
+  renderZodiacTicker();
 
   // Update product labels without making another API request.
   renderHomepageProducts(homepageProducts);
@@ -537,6 +593,23 @@ function toggleLanguage() {
   currentLanguage = currentLanguage === "hi" ? "en" : "hi";
   localStorage.setItem("rashifalLanguage", currentLanguage);
   applyLanguage();
+}
+
+// Render the moving zodiac ticker.
+function renderZodiacTicker() {
+  const track = document.getElementById("tickerTrack");
+
+  const zodiacItems = [...signs, ...signs];
+
+  track.innerHTML = zodiacItems.map(sign => `
+    <a
+      class="ticker-item"
+      href="horoscope.html?sign=${sign[0]}&period=${currentPeriod}"
+    >
+      <img src="icons/${sign[3]}" alt="${sign[2]}">
+      <span>${currentLanguage === "hi" ? sign[1] : sign[2]}</span>
+    </a>
+  `).join("");
 }
 
 function renderSigns() {
@@ -571,6 +644,7 @@ function selectPeriod(button) {
   currentPeriod = button.dataset.period;
 
   renderSigns();
+  renderZodiacTicker();
 }
 
 function updateDate() {
