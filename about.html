@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Aaj Ka Rashifal</title>
+  <meta name="description" content="Aaj Ka Rashifal के बारे में जानें। सभी 12 राशियों का दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल हिंदी और English में।">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf8f3;
+      color: #29213d;
+    }
+
+    header {
+      background: #30204f;
+      color: white;
+      padding: 18px 6%;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .logo span { color: #f5c96b; }
+
+    .lang-btn {
+      background: #f5c96b;
+      color: #30204f;
+      border: 0;
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #39245e, #65418b);
+      color: white;
+      text-align: center;
+      padding: 55px 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 36px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #eee5fa;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .content {
+      background: white;
+      border: 1px solid #eee7f3;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 3px 12px rgba(40, 25, 65, 0.04);
+    }
+
+    .content h2 {
+      color: #493365;
+      margin-top: 0;
+    }
+
+    .content p,
+    .content li {
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .content ul { padding-left: 22px; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 22px;
+      color: #493365;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #30204f;
+      color: #eee5fa;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 29px; }
+      .content { padding: 22px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">✦ Aaj Ka <span>Rashifal</span></a>
+    <button class="lang-btn" onclick="toggleLanguage()">English</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 id="pageTitle">हमारे बारे में</h1>
+  <p id="heroDescription">Aaj Ka Rashifal में आपका स्वागत है।</p>
+</section>
+
+<main>
+  <article class="content">
+
+    <div id="hindiContent">
+      <h2>Aaj Ka Rashifal में आपका स्वागत है</h2>
+
+      <p>
+        Aaj Ka Rashifal एक ऐसी वेबसाइट है जहाँ आप सभी 12 राशियों का
+        दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल हिंदी और English में
+        पढ़ सकते हैं।
+      </p>
+
+      <h2>हमारा उद्देश्य</h2>
+
+      <p>
+        हमारा उद्देश्य राशिफल से जुड़ी सामान्य जानकारी को सरल भाषा में
+        एक ही जगह उपलब्ध कराना है, ताकि पाठक अपनी राशि के अनुसार
+        करियर, धन, प्रेम और स्वास्थ्य जैसे विषयों से जुड़ी सामान्य
+        भविष्यवाणियाँ पढ़ सकें।
+      </p>
+
+      <h2>हमारी वेबसाइट पर क्या मिलेगा?</h2>
+
+      <ul>
+        <li>सभी 12 राशियों का राशिफल।</li>
+        <li>दैनिक, साप्ताहिक, मासिक और वार्षिक राशिफल।</li>
+        <li>हिंदी और English में पढ़ने का विकल्प।</li>
+        <li>राशि और विषय के अनुसार उपयोगी सामान्य जानकारी।</li>
+      </ul>
+
+      <h2>एक जरूरी बात</h2>
+
+      <p>
+        इस वेबसाइट पर दी गई राशिफल संबंधी सामग्री सामान्य जानकारी
+        और मनोरंजन के उद्देश्य से है। इसे निश्चित भविष्यवाणी या
+        चिकित्सा, वित्तीय, कानूनी अथवा अन्य पेशेवर सलाह न समझें।
+        महत्वपूर्ण निर्णय लेते समय अपनी परिस्थिति के अनुसार उचित
+        विशेषज्ञ की सलाह लें।
+      </p>
+    </div>
+
+    <div id="englishContent" hidden>
+      <h2>Welcome to Aaj Ka Rashifal</h2>
+
+      <p>
+        Aaj Ka Rashifal is a website where you can read daily, weekly,
+        monthly and yearly horoscopes for all 12 zodiac signs in
+        Hindi and English.
+      </p>
+
+      <h2>Our Purpose</h2>
+
+      <p>
+        Our purpose is to make general horoscope information easy
+        to access in one place. Readers can explore general
+        predictions related to career, finance, love and health
+        according to their zodiac sign.
+      </p>
+
+      <h2>What You Can Find Here</h2>
+
+      <ul>
+        <li>Horoscopes for all 12 zodiac signs.</li>
+        <li>Daily, weekly, monthly and yearly horoscope updates.</li>
+        <li>A choice of Hindi and English.</li>
+        <li>General information organized by zodiac sign and topic.</li>
+      </ul>
+
+      <h2>Important Note</h2>
+
+      <p>
+        Horoscope content on this website is provided for general
+        information and entertainment. It should not be treated as
+        a certain prediction or as medical, financial, legal or
+        other professional advice. Please consult an appropriate
+        professional when making important decisions.
+      </p>
+    </div>
+
+    <a class="back-link" id="backLink" href="index.html">
+      ← होम पेज पर जाएँ
+    </a>
+
+  </article>
+</main>
+
+<footer>
+  © 2026 Aaj Ka Rashifal |
+  <span id="footerText">आपका स्वागत है</span>
+</footer>
+
+<script>
+  let currentLanguage =
+    localStorage.getItem("rashifalLanguage") || "hi";
+
+  function applyLanguage() {
+    const isEnglish = currentLanguage === "en";
+
+    document.documentElement.lang = currentLanguage;
+
+    document.getElementById("pageTitle").textContent =
+      isEnglish ? "About Us" : "हमारे बारे में";
+
+    document.getElementById("heroDescription").textContent =
+      isEnglish
+        ? "Learn more about Aaj Ka Rashifal."
+        : "Aaj Ka Rashifal में आपका स्वागत है।";
+
+    document.getElementById("hindiContent").hidden = isEnglish;
+    document.getElementById("englishContent").hidden = !isEnglish;
+
+    document.querySelector(".lang-btn").textContent =
+      isEnglish ? "हिंदी" : "English";
+
+    document.getElementById("backLink").textContent =
+      isEnglish ? "← Back to Home" : "← होम पेज पर जाएँ";
+
+    document.getElementById("footerText").textContent =
+      isEnglish
+        ? "Welcome to Aaj Ka Rashifal"
+        : "आपका स्वागत है";
+  }
+
+  function toggleLanguage() {
+    currentLanguage =
+      currentLanguage === "hi" ? "en" : "hi";
+
+    localStorage.setItem(
+      "rashifalLanguage",
+      currentLanguage
+    );
+
+    applyLanguage();
+  }
+
+  applyLanguage();
+</script>
+
+</body>
+</html>
