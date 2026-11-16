@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Aaj Ka Rashifal</title>
+  <meta name="description" content="Contact Aaj Ka Rashifal for questions, suggestions and feedback.">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #faf8f3;
+      color: #29213d;
+    }
+
+    header {
+      background: #30204f;
+      color: white;
+      padding: 18px 6%;
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .logo span { color: #f5c96b; }
+
+    .lang-btn {
+      background: #f5c96b;
+      color: #30204f;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #39245e, #65418b);
+      color: white;
+      text-align: center;
+      padding: 55px 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 36px;
+    }
+
+    .hero p {
+      color: #eee5fa;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .content {
+      background: white;
+      border: 1px solid #eee7f3;
+      border-radius: 15px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(40, 25, 65, 0.04);
+    }
+
+    .content h2 { color: #493365; }
+
+    .content p {
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .email-link {
+      display: inline-block;
+      margin: 15px 0;
+      padding: 13px 22px;
+      background: #493365;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      color: #493365;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #30204f;
+      color: #eee5fa;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 29px; }
+      .content { padding: 25px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">✦ Aaj Ka <span>Rashifal</span></a>
+    <button class="lang-btn" onclick="toggleLanguage()">English</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 id="pageTitle">संपर्क करें</h1>
+  <p id="heroDescription">हमसे संपर्क करने के लिए आपका स्वागत है।</p>
+</section>
+
+<main>
+  <section class="content">
+    <div id="hindiContent">
+      <h2>हमसे संपर्क करें</h2>
+      <p>
+        यदि आपके कोई सवाल, सुझाव या प्रतिक्रिया हैं, तो हमें ईमेल करें।
+        हमें आपकी राय जानकर खुशी होगी।
+      </p>
+      <p><strong>ईमेल:</strong></p>
+    </div>
+
+    <div id="englishContent" hidden>
+      <h2>Get in Touch</h2>
+      <p>
+        If you have any questions, suggestions or feedback,
+        feel free to contact us by email. We would be happy
+        to hear from you.
+      </p>
+      <p><strong>Email:</strong></p>
+    </div>
+
+    <a class="email-link"
+       href="mailto:inspirehubbyom@gmail.com">
+      inspirehubbyom@gmail.com
+    </a>
+
+    <br>
+
+    <a class="back-link" id="backLink" href="index.html">
+      ← होम पेज पर जाएँ
+    </a>
+  </section>
+</main>
+
+<footer>
+  © 2026 Aaj Ka Rashifal |
+  <span id="footerText">आपका स्वागत है</span>
+</footer>
+
+<script>
+  let currentLanguage =
+    localStorage.getItem("rashifalLanguage") || "hi";
+
+  function applyLanguage() {
+    const isEnglish = currentLanguage === "en";
+
+    document.documentElement.lang = currentLanguage;
+
+    document.getElementById("pageTitle").textContent =
+      isEnglish ? "Contact Us" : "संपर्क करें";
+
+    document.getElementById("heroDescription").textContent =
+      isEnglish
+        ? "We welcome your questions and feedback."
+        : "हमसे संपर्क करने के लिए आपका स्वागत है।";
+
+    document.getElementById("hindiContent").hidden = isEnglish;
+    document.getElementById("englishContent").hidden = !isEnglish;
+
+    document.querySelector(".lang-btn").textContent =
+      isEnglish ? "हिंदी" : "English";
+
+    document.getElementById("backLink").textContent =
+      isEnglish ? "← Back to Home" : "← होम पेज पर जाएँ";
+
+    document.getElementById("footerText").textContent =
+      isEnglish
+        ? "Welcome to Aaj Ka Rashifal"
+        : "आपका स्वागत है";
+  }
+
+  function toggleLanguage() {
+    currentLanguage =
+      currentLanguage === "hi" ? "en" : "hi";
+
+    localStorage.setItem(
+      "rashifalLanguage",
+      currentLanguage
+    );
+
+    applyLanguage();
+  }
+
+  applyLanguage();
+</script>
+
+</body>
+</html>
