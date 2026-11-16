@@ -222,6 +222,79 @@
       background: #30204f;
     }
 
+    /* Fixed product panels on both sides of the horoscope */
+    .product-sidebar {
+      position: fixed;
+      top: 105px;
+      width: 185px;
+      max-height: calc(100vh - 125px);
+      overflow-y: auto;
+      z-index: 900;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid #eee8f4;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(40,25,65,.10);
+    }
+
+    .product-sidebar-left {
+      left: max(10px, calc((100vw - 1280px) / 2));
+    }
+
+    .product-sidebar-right {
+      right: max(10px, calc((100vw - 1280px) / 2));
+    }
+
+    .product-sidebar h2 {
+      color: #493365;
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.4;
+      margin: 0 0 12px;
+    }
+
+    .sidebar-product-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .product-sidebar .product-card {
+      padding: 10px;
+    }
+
+    .product-sidebar .product-image,
+    .product-sidebar .product-image-placeholder {
+      height: 105px;
+    }
+
+    .product-sidebar .product-card h3 {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .product-sidebar .product-category {
+      font-size: 12px;
+    }
+
+    .product-sidebar .product-link {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    /* On narrower screens, show products below the horoscope instead */
+    @media (max-width: 1279px) {
+      .product-sidebar {
+        display: none !important;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .products-panel {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 480px) {
       .products-panel {
         padding: 22px 15px;
@@ -260,6 +333,17 @@
     </div>
   </div>
 </header>
+
+<!-- Fixed product recommendation sidebars for desktop screens -->
+<aside class="product-sidebar product-sidebar-left" id="leftProductsSidebar" hidden>
+  <h2 id="leftProductsTitle">Recommended Products</h2>
+  <div class="sidebar-product-list" id="leftProductsGrid"></div>
+</aside>
+
+<aside class="product-sidebar product-sidebar-right" id="rightProductsSidebar" hidden>
+  <h2 id="rightProductsTitle">Recommended Products</h2>
+  <div class="sidebar-product-list" id="rightProductsGrid"></div>
+</aside>
 
 <main>
   <section class="panel">
@@ -498,6 +582,10 @@ function renderHoroscope() {
 function loadAffiliateProducts() {
   const panel = document.getElementById("productsPanel");
   const grid = document.getElementById("productsGrid");
+  const leftSidebar = document.getElementById("leftProductsSidebar");
+  const rightSidebar = document.getElementById("rightProductsSidebar");
+  const leftGrid = document.getElementById("leftProductsGrid");
+  const rightGrid = document.getElementById("rightProductsGrid");
 
   fetch(
     `${API_URL}?action=products&sign=${encodeURIComponent(signId)}`
@@ -505,14 +593,18 @@ function loadAffiliateProducts() {
     .then(response => response.json())
     .then(result => {
       grid.innerHTML = "";
+      leftGrid.innerHTML = "";
+      rightGrid.innerHTML = "";
 
       if (!result.success || !Array.isArray(result.products) ||
           result.products.length === 0) {
         panel.hidden = true;
+        leftSidebar.hidden = true;
+        rightSidebar.hidden = true;
         return;
       }
 
-      result.products.forEach(product => {
+      result.products.forEach((product, index) => {
         const card = document.createElement("article");
         card.className = "product-card";
 
@@ -560,10 +652,27 @@ function loadAffiliateProducts() {
           card.appendChild(link);
         }
 
+        // Keep the full product list below the horoscope for smaller screens.
         grid.appendChild(card);
+
+        // On desktop, alternate products between the fixed left and right panels.
+        const sidebarCard = card.cloneNode(true);
+        if (index % 2 === 0) {
+          leftGrid.appendChild(sidebarCard);
+        } else {
+          rightGrid.appendChild(sidebarCard);
+        }
       });
 
+      // If only one product is available, show it on both sides so both
+      // side panels remain populated, just like the reference layout.
+      if (result.products.length === 1) {
+        rightGrid.appendChild(leftGrid.firstElementChild.cloneNode(true));
+      }
+
       panel.hidden = false;
+      leftSidebar.hidden = leftGrid.children.length === 0;
+      rightSidebar.hidden = rightGrid.children.length === 0;
       updateProductsLanguage();
     })
     .catch(error => {
@@ -575,8 +684,13 @@ function loadAffiliateProducts() {
 function updateProductsLanguage() {
   const hi = currentLanguage === "hi";
 
-  document.getElementById("productsTitle").textContent =
-    hi ? "आपके लिए सुझाए गए उत्पाद" : "Recommended Products";
+  const productHeading = hi
+    ? "आपके लिए सुझाए गए उत्पाद"
+    : "Recommended Products";
+
+  document.getElementById("productsTitle").textContent = productHeading;
+  document.getElementById("leftProductsTitle").textContent = productHeading;
+  document.getElementById("rightProductsTitle").textContent = productHeading;
 
   document.querySelectorAll(".product-link").forEach(link => {
     link.textContent = hi ? "उत्पाद देखें" : "View Product";
