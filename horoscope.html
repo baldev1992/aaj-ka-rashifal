@@ -579,6 +579,7 @@ function renderHoroscope() {
 }
 
 // Load and display affiliate products for the current zodiac sign
+
 function loadAffiliateProducts() {
   const panel = document.getElementById("productsPanel");
   const grid = document.getElementById("productsGrid");
@@ -608,30 +609,64 @@ function loadAffiliateProducts() {
         const card = document.createElement("article");
         card.className = "product-card";
 
+        // Create Amazon affiliate link
+        const affiliateUrl = product.affiliateLink || "";
+
+        // Make product image clickable
         if (product.imageUrl) {
           const image = document.createElement("img");
           image.className = "product-image";
           image.src = product.imageUrl;
           image.alt = product.productName || "Product";
           image.loading = "lazy";
+
           image.onerror = () => {
             const placeholder = document.createElement("div");
             placeholder.className = "product-image-placeholder";
             placeholder.textContent =
-              currentLanguage === "hi" ? "चित्र उपलब्ध नहीं" : "Image unavailable";
+              currentLanguage === "hi"
+                ? "चित्र उपलब्ध नहीं"
+                : "Image unavailable";
             image.replaceWith(placeholder);
           };
-          card.appendChild(image);
+
+          if (affiliateUrl) {
+            const imageLink = document.createElement("a");
+            imageLink.href = affiliateUrl;
+            imageLink.target = "_blank";
+            imageLink.rel = "sponsored noopener noreferrer";
+            imageLink.appendChild(image);
+            card.appendChild(imageLink);
+          } else {
+            card.appendChild(image);
+          }
+
         } else {
           const placeholder = document.createElement("div");
           placeholder.className = "product-image-placeholder";
           placeholder.textContent =
-            currentLanguage === "hi" ? "चित्र जल्द उपलब्ध होगा" : "Image coming soon";
+            currentLanguage === "hi"
+              ? "चित्र जल्द उपलब्ध होगा"
+              : "Image coming soon";
           card.appendChild(placeholder);
         }
 
+        // Make product name clickable
         const name = document.createElement("h3");
-        name.textContent = product.productName || "";
+
+        if (affiliateUrl) {
+          const nameLink = document.createElement("a");
+          nameLink.href = affiliateUrl;
+          nameLink.target = "_blank";
+          nameLink.rel = "sponsored noopener noreferrer";
+          nameLink.textContent = product.productName || "";
+          nameLink.style.textDecoration = "none";
+          nameLink.style.color = "inherit";
+          name.appendChild(nameLink);
+        } else {
+          name.textContent = product.productName || "";
+        }
+
         card.appendChild(name);
 
         if (product.category) {
@@ -641,10 +676,11 @@ function loadAffiliateProducts() {
           card.appendChild(category);
         }
 
-        if (product.affiliateLink) {
+        // View Product button
+        if (affiliateUrl) {
           const link = document.createElement("a");
           link.className = "product-link";
-          link.href = product.affiliateLink;
+          link.href = affiliateUrl;
           link.target = "_blank";
           link.rel = "sponsored noopener noreferrer";
           link.textContent =
@@ -652,11 +688,11 @@ function loadAffiliateProducts() {
           card.appendChild(link);
         }
 
-        // Keep the full product list below the horoscope for smaller screens.
         grid.appendChild(card);
 
-        // On desktop, alternate products between the fixed left and right panels.
+        // Alternate products between left and right sidebars
         const sidebarCard = card.cloneNode(true);
+
         if (index % 2 === 0) {
           leftGrid.appendChild(sidebarCard);
         } else {
@@ -664,8 +700,7 @@ function loadAffiliateProducts() {
         }
       });
 
-      // If only one product is available, show it on both sides so both
-      // side panels remain populated, just like the reference layout.
+      // Show one product on both sides if only one is available
       if (result.products.length === 1) {
         rightGrid.appendChild(leftGrid.firstElementChild.cloneNode(true));
       }
@@ -673,13 +708,17 @@ function loadAffiliateProducts() {
       panel.hidden = false;
       leftSidebar.hidden = leftGrid.children.length === 0;
       rightSidebar.hidden = rightGrid.children.length === 0;
+
       updateProductsLanguage();
     })
     .catch(error => {
       console.error("Affiliate products could not be loaded:", error);
       panel.hidden = true;
+      leftSidebar.hidden = true;
+      rightSidebar.hidden = true;
     });
 }
+
 
 function updateProductsLanguage() {
   const hi = currentLanguage === "hi";
