@@ -7,9 +7,7 @@
   <title>Aaj Ka Rashifal</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -24,7 +22,8 @@
       padding: 18px 6%;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 1001;
+      min-height: 74px;
     }
 
     .nav {
@@ -34,6 +33,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
+      min-height: 38px;
     }
 
     .nav-actions {
@@ -50,13 +50,69 @@
       font-weight: bold;
     }
 
-    a {
-      color: inherit;
-    }
+    a { color: inherit; }
 
     .home-link {
       color: #f5c96b;
       text-decoration: none;
+    }
+
+    /* Zodiac ticker below the fixed header */
+    .zodiac-ticker {
+      position: sticky;
+      top: 74px;
+      z-index: 1000;
+      width: 100%;
+      overflow: hidden;
+      background: #30204f;
+      padding: 12px 0;
+      border-bottom: 3px solid #f5c96b;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: zodiacScroll 45s linear infinite;
+      will-change: transform;
+    }
+
+    .zodiac-ticker:hover .ticker-track {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 25px;
+      color: white;
+      text-decoration: none;
+      white-space: nowrap;
+      font-size: 15px;
+      font-weight: bold;
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .ticker-item img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      background: white;
+      border-radius: 50%;
+      padding: 3px;
+    }
+
+    .ticker-item:hover {
+      color: #f5c96b;
+    }
+
+    @keyframes zodiacScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
     }
 
     main {
@@ -80,18 +136,14 @@
       margin: 0 auto 12px;
     }
 
-    h1, .subtitle {
-      text-align: center;
-    }
+    h1, .subtitle { text-align: center; }
 
     h1 {
       color: #493365;
       margin-bottom: 8px;
     }
 
-    .subtitle {
-      color: #777;
-    }
+    .subtitle { color: #777; }
 
     .periods {
       display: flex;
@@ -122,18 +174,14 @@
       text-align: center;
     }
 
-    .content section {
-      margin-bottom: 24px;
-    }
+    .content section { margin-bottom: 24px; }
 
     .content h3 {
       color: #493365;
       margin-bottom: 8px;
     }
 
-    .content p {
-      white-space: pre-line;
-    }
+    .content p { white-space: pre-line; }
 
     .date {
       color: #8a6caa;
@@ -218,16 +266,14 @@
       font-weight: bold;
     }
 
-    .product-link:hover {
-      background: #30204f;
-    }
+    .product-link:hover { background: #30204f; }
 
-    /* Fixed product panels on both sides of the horoscope */
+    /* Fixed product panels on both sides */
     .product-sidebar {
       position: fixed;
-      top: 105px;
+      top: 145px;
       width: 185px;
-      max-height: calc(100vh - 125px);
+      max-height: calc(100vh - 165px);
       overflow-y: auto;
       z-index: 900;
       padding: 14px;
@@ -259,9 +305,7 @@
       gap: 12px;
     }
 
-    .product-sidebar .product-card {
-      padding: 10px;
-    }
+    .product-sidebar .product-card { padding: 10px; }
 
     .product-sidebar .product-image,
     .product-sidebar .product-image-placeholder {
@@ -273,45 +317,31 @@
       overflow-wrap: anywhere;
     }
 
-    .product-sidebar .product-category {
-      font-size: 12px;
-    }
+    .product-sidebar .product-category { font-size: 12px; }
 
     .product-sidebar .product-link {
       padding: 8px 10px;
       font-size: 12px;
     }
 
-    /* On narrower screens, show products below the horoscope instead */
     @media (max-width: 1279px) {
-      .product-sidebar {
-        display: none !important;
-      }
+      .product-sidebar { display: none !important; }
     }
 
     @media (min-width: 1280px) {
-      .products-panel {
-        display: none !important;
-      }
+      .products-panel { display: none !important; }
     }
 
     @media (max-width: 480px) {
-      .products-panel {
-        padding: 22px 15px;
-      }
+      .products-panel { padding: 22px 15px; }
 
+      .nav { flex-wrap: wrap; }
 
-      .nav {
-        flex-wrap: wrap;
-      }
+      .nav-actions { gap: 10px; }
 
-      .nav-actions {
-        gap: 10px;
-      }
+      .panel { padding: 22px 15px; }
 
-      .panel {
-        padding: 22px 15px;
-      }
+      .ticker-item { padding: 0 16px; }
     }
   </style>
 </head>
@@ -334,7 +364,12 @@
   </div>
 </header>
 
-<!-- Fixed product recommendation sidebars for desktop screens -->
+<!-- Zodiac ticker directly below header -->
+<div class="zodiac-ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- Fixed product recommendation sidebars -->
 <aside class="product-sidebar product-sidebar-left" id="leftProductsSidebar" hidden>
   <h2 id="leftProductsTitle">Recommended Products</h2>
   <div class="sidebar-product-list" id="leftProductsGrid"></div>
@@ -365,7 +400,6 @@
 
     <div class="content">
       <h2 id="periodTitle">आज का राशिफल</h2>
-
       <div id="horoscopeContent"></div>
     </div>
 
@@ -404,7 +438,13 @@ const signs = {
 const params = new URLSearchParams(window.location.search);
 
 const signId = (params.get("sign") || "ARIES").toUpperCase();
-const period = params.get("period") || "today";
+
+const validPeriods = ["today", "week", "month", "year"];
+const requestedPeriod = params.get("period") || "today";
+const period = validPeriods.includes(requestedPeriod)
+  ? requestedPeriod
+  : "today";
+
 const sign = signs[signId] || signs.ARIES;
 
 // Remember visitor's language
@@ -414,21 +454,36 @@ let currentLanguage =
 let horoscopeData = null;
 
 // Set zodiac icon
-document.getElementById("signIcon").src =
-  "icons/" + sign[2];
-
+document.getElementById("signIcon").src = "icons/" + sign[2];
 document.getElementById("signIcon").alt = sign[1];
+
+// Render the ticker with all 12 zodiac signs.
+// The duplicate set creates a continuous scrolling effect.
+function renderZodiacTicker() {
+  const track = document.getElementById("tickerTrack");
+
+  const zodiacEntries = Object.entries(signs);
+  const tickerItems = [...zodiacEntries, ...zodiacEntries];
+
+  track.innerHTML = tickerItems.map(([id, details]) => `
+    <a
+      class="ticker-item"
+      href="horoscope.html?sign=${id}&period=${period}"
+      aria-label="${currentLanguage === "hi" ? details[0] : details[1]} horoscope"
+    >
+      <img src="icons/${details[2]}" alt="">
+      <span>${currentLanguage === "hi" ? details[0] : details[1]}</span>
+    </a>
+  `).join("");
+}
 
 // Update date according to selected period and language
 function updateDate() {
-
   const now = new Date();
   const locale = currentLanguage === "hi" ? "hi-IN" : "en-IN";
-
   const dateDisplay = document.getElementById("todayDate");
 
   if (period === "today") {
-
     dateDisplay.textContent = now.toLocaleDateString(locale, {
       day: "numeric",
       month: "long",
@@ -436,7 +491,6 @@ function updateDate() {
     });
 
   } else if (period === "week") {
-
     const weekStart = new Date(now);
     weekStart.setDate(now.getDate() - now.getDay());
 
@@ -457,25 +511,19 @@ function updateDate() {
     dateDisplay.textContent = startText + " – " + endText;
 
   } else if (period === "month") {
-
     dateDisplay.textContent = now.toLocaleDateString(locale, {
       month: "long",
       year: "numeric"
     });
 
   } else if (period === "year") {
-
     dateDisplay.textContent = now.getFullYear();
-
   }
 }
 
 // Lucky colour translation
 function getLuckyColor(color) {
-
-  if (currentLanguage === "hi") {
-    return color;
-  }
+  if (currentLanguage === "hi") return color;
 
   const colors = {
     "पीला": "Yellow",
@@ -495,7 +543,6 @@ function getLuckyColor(color) {
 
 // Add horoscope section
 function addSection(container, title, value) {
-
   const section = document.createElement("section");
 
   const heading = document.createElement("h3");
@@ -510,76 +557,46 @@ function addSection(container, title, value) {
 
   section.appendChild(heading);
   section.appendChild(paragraph);
-
   container.appendChild(section);
 }
 
 // Display horoscope in selected language
 function renderHoroscope() {
-
   if (!horoscopeData) return;
 
   const data = horoscopeData;
-
-  const container =
-    document.getElementById("horoscopeContent");
+  const container = document.getElementById("horoscopeContent");
 
   container.innerHTML = "";
 
   const hi = currentLanguage === "hi";
 
-  addSection(
-    container,
-    hi ? "सामान्य राशिफल" : "Overall Horoscope",
-    hi ? data.Overall_HI : data.Overall_EN
-  );
+  addSection(container, hi ? "सामान्य राशिफल" : "Overall Horoscope",
+    hi ? data.Overall_HI : data.Overall_EN);
 
-  addSection(
-    container,
-    hi ? "करियर" : "Career",
-    hi ? data.Career_HI : data.Career_EN
-  );
+  addSection(container, hi ? "करियर" : "Career",
+    hi ? data.Career_HI : data.Career_EN);
 
-  addSection(
-    container,
-    hi ? "धन और वित्त" : "Finance",
-    hi ? data.Finance_HI : data.Finance_EN
-  );
+  addSection(container, hi ? "धन और वित्त" : "Finance",
+    hi ? data.Finance_HI : data.Finance_EN);
 
-  addSection(
-    container,
-    hi ? "प्रेम और संबंध" : "Love & Relationships",
-    hi ? data.Love_HI : data.Love_EN
-  );
+  addSection(container, hi ? "प्रेम और संबंध" : "Love & Relationships",
+    hi ? data.Love_HI : data.Love_EN);
 
-  addSection(
-    container,
-    hi ? "स्वास्थ्य" : "Health",
-    hi ? data.Health_HI : data.Health_EN
-  );
+  addSection(container, hi ? "स्वास्थ्य" : "Health",
+    hi ? data.Health_HI : data.Health_EN);
 
-  addSection(
-    container,
-    hi ? "आज का शुभ रंग" : "Lucky Colour",
-    getLuckyColor(data.Lucky_Color)
-  );
+  addSection(container, hi ? "आज का शुभ रंग" : "Lucky Colour",
+    getLuckyColor(data.Lucky_Color));
 
-  addSection(
-    container,
-    hi ? "शुभ अंक" : "Lucky Number",
-    data.Lucky_Number
-  );
+  addSection(container, hi ? "शुभ अंक" : "Lucky Number",
+    data.Lucky_Number);
 
-  addSection(
-    container,
-    hi ? "विशेष सलाह" : "Special Advice",
-    hi ? data.Advice_HI : data.Advice_EN
-  );
-
+  addSection(container, hi ? "विशेष सलाह" : "Special Advice",
+    hi ? data.Advice_HI : data.Advice_EN);
 }
 
 // Load and display affiliate products for the current zodiac sign
-
 function loadAffiliateProducts() {
   const panel = document.getElementById("productsPanel");
   const grid = document.getElementById("productsGrid");
@@ -609,10 +626,8 @@ function loadAffiliateProducts() {
         const card = document.createElement("article");
         card.className = "product-card";
 
-        // Create Amazon affiliate link
         const affiliateUrl = product.affiliateLink || "";
 
-        // Make product image clickable
         if (product.imageUrl) {
           const image = document.createElement("img");
           image.className = "product-image";
@@ -651,7 +666,6 @@ function loadAffiliateProducts() {
           card.appendChild(placeholder);
         }
 
-        // Make product name clickable
         const name = document.createElement("h3");
 
         if (affiliateUrl) {
@@ -676,7 +690,6 @@ function loadAffiliateProducts() {
           card.appendChild(category);
         }
 
-        // View Product button
         if (affiliateUrl) {
           const link = document.createElement("a");
           link.className = "product-link";
@@ -690,7 +703,6 @@ function loadAffiliateProducts() {
 
         grid.appendChild(card);
 
-        // Alternate products between left and right sidebars
         const sidebarCard = card.cloneNode(true);
 
         if (index % 2 === 0) {
@@ -700,7 +712,6 @@ function loadAffiliateProducts() {
         }
       });
 
-      // Show one product on both sides if only one is available
       if (result.products.length === 1) {
         rightGrid.appendChild(leftGrid.firstElementChild.cloneNode(true));
       }
@@ -719,7 +730,6 @@ function loadAffiliateProducts() {
     });
 }
 
-
 function updateProductsLanguage() {
   const hi = currentLanguage === "hi";
 
@@ -736,8 +746,10 @@ function updateProductsLanguage() {
   });
 
   document.querySelectorAll(".product-image-placeholder").forEach(placeholder => {
-    if (placeholder.textContent === "चित्र जल्द उपलब्ध होगा" ||
-        placeholder.textContent === "Image coming soon") {
+    if (
+      placeholder.textContent === "चित्र जल्द उपलब्ध होगा" ||
+      placeholder.textContent === "Image coming soon"
+    ) {
       placeholder.textContent =
         hi ? "चित्र जल्द उपलब्ध होगा" : "Image coming soon";
     } else {
@@ -749,7 +761,6 @@ function updateProductsLanguage() {
 
 // Apply language to the complete page
 function applyLanguage() {
-
   const hi = currentLanguage === "hi";
 
   document.documentElement.lang = currentLanguage;
@@ -774,7 +785,6 @@ function applyLanguage() {
   };
 
   document.querySelectorAll(".periods a").forEach(link => {
-
     link.textContent = periodNames[link.dataset.period];
 
     link.href =
@@ -785,7 +795,6 @@ function applyLanguage() {
     } else {
       link.classList.remove("active");
     }
-
   });
 
   const titles = {
@@ -800,12 +809,13 @@ function applyLanguage() {
 
   updateDate();
   renderHoroscope();
+  renderZodiacTicker();
   updateProductsLanguage();
 
   document.title =
     hi ? "राशिफल | Aaj Ka Rashifal" : "Horoscope | Aaj Ka Rashifal";
-
 }
+
 function showLoadingMessage() {
   document.getElementById("horoscopeContent").textContent =
     currentLanguage === "hi"
@@ -815,53 +825,39 @@ function showLoadingMessage() {
 
 // Change language and save preference
 function toggleLanguage() {
-
   currentLanguage =
     currentLanguage === "hi" ? "en" : "hi";
 
-  localStorage.setItem(
-    "rashifalLanguage",
-    currentLanguage
-  );
+  localStorage.setItem("rashifalLanguage", currentLanguage);
 
   applyLanguage();
-
 }
 
-// Load saved language when page opens
+// Initialize page
 applyLanguage();
 showLoadingMessage();
-// Fetch affiliate products for this zodiac sign
 loadAffiliateProducts();
 
 // Fetch horoscope data
 fetch(
   `${API_URL}?sign=${encodeURIComponent(signId)}&period=${encodeURIComponent(period)}`
 )
-
 .then(response => response.json())
-
 .then(result => {
-
   if (!result.success) {
     throw new Error(result.error || "Horoscope not available.");
   }
 
   horoscopeData = result.data;
-
   renderHoroscope();
-
 })
-
 .catch(error => {
-
   document.getElementById("horoscopeContent").textContent =
     currentLanguage === "hi"
       ? "राशिफल लोड नहीं हो पाया। कृपया बाद में प्रयास करें।"
       : "Unable to load horoscope. Please try again later.";
 
   console.error(error);
-
 });
 
 </script>
